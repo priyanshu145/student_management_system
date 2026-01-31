@@ -29,9 +29,9 @@ SECRET_KEY = 'django-insecure-=e@&6!(t(-8%o21e-mnkszyh$$m1h2u5egrmgzen3edd@!ngd$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['Priyanshu998494.pythonanywhere.com']
 
 
+#'Priyanshu998494.pythonanywhere.com'
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,7 +80,28 @@ WSGI_APPLICATION = 'student_management_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+
+ALLOWED_HOSTS = ['Priyanshu998494.pythonanywhere.com', 'localhost']
+
+
+
+import os
+
+if 'Priyanshu998494.pythonanywhere.com' in os.environ:
+    # PythonAnywhere Database
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Priyanshu998494$default',
+        'USER': 'Priyanshu998494',
+        'PASSWORD': 'Priyanshu@12',
+        'HOST': 'Priyanshu998494.mysql.pythonanywhere-services.com',
+        'PORT': '3306',
+    }
+    }
+else:
+    # Local Database
+    DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'student_management_system_db',
@@ -89,7 +110,9 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '3306',
     }
-}
+    }
+
+
 
 
 # Password validation
