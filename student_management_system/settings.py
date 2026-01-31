@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 import pymysql
 pymysql.install_as_MySQLdb()
@@ -18,13 +20,15 @@ pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=e@&6!(t(-8%o21e-mnkszyh$$m1h2u5egrmgzen3edd@!ngd$'
+
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -81,37 +85,19 @@ WSGI_APPLICATION = 'student_management_system.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-ALLOWED_HOSTS = ['Priyanshu998494.pythonanywhere.com', 'localhost']
+ALLOWED_HOSTS = ['Priyanshu998494.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
-
-import os
-
-if 'Priyanshu998494.pythonanywhere.com' in os.environ:
-    # PythonAnywhere Database
-    DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Priyanshu998494$default',
-        'USER': 'Priyanshu998494',
-        'PASSWORD': 'Priyanshu@12',
-        'HOST': 'Priyanshu998494.mysql.pythonanywhere-services.com',
-        'PORT': '3306',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT', '3306'),
     }
-    }
-else:
-    # Local Database
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'student_management_system_db',
-        'USER': 'root',
-        'PASSWORD': 'Priyanshu145',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-    }
-
+}
 
 
 
