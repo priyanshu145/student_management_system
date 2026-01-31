@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Management System</title>
+
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #74ebd5, #9face6);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        header {
+            background: #1f3c88;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        header h2 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #162447;
+            padding: 12px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 18px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #f6c90e;
+        }
+
+        .container {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .container h1 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            color: #1f3c88;
+        }
+
+        .container p {
+            font-size: 18px;
+            max-width: 650px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            margin-top: 35px;
+        }
+
+        .buttons a {
+            display: inline-block;
+            margin: 10px;
+            padding: 14px 30px;
+            background: #1f3c88;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .buttons a:hover {
+            background: #f6c90e;
+            color: #162447;
+            transform: translateY(-3px);
+        }
+
+        footer {
+            background: #1f3c88;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>Student Management System</h2>
+    <p>Manage Students | Courses | Records</p>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Students</a>
+    <a href="#">Courses</a>
+    <a href="#">Results</a>
+    <a href="#">Contact</a>
+</nav>
+
+<div class="container">
+    <h1>Welcome to Student Management System</h1>
+    <p>
+        A simple platform to manage student records and academic performance.
+    </p>
+
+    <div class="buttons">
+        <a href="{% url 'authentication:admin_login' %}">Admin Login</a>
+
+        <a href="{% url 'authentication:student_login' %}">Student Login</a>
+
+    </div>
+</div>
+
+<footer>
+    © 2026 Student Management System
+</footer>
+
+</body>
+</html>

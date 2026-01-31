@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Update Student</title>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .container {
+            width: 40%;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-group {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .update-btn {
+            background-color: #007bff;
+        }
+
+        .update-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .cancel-btn {
+            background-color: #6c757d;
+        }
+
+        .cancel-btn:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Update Student</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Name</label>
+        <input type="text" name="name" value="{{ student.full_name }}" required>
+
+        <label>Roll No</label>
+        <input type="number" name="roll_no" value="{{ student.roll_no }}" required>
+
+        <label>Email</label>
+        <input type="email" name="email" value="{{ student.email }}" required>
+
+        <label>Course</label>
+        <input type="text" name="course" value="{{ student.course }}" required>
+
+        <div class="btn-group">
+            <button type="submit" class="btn update-btn">Update</button>
+            <a href="{% url 'admin_panal:view_students' %}" class="btn cancel-btn">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #51a8ff;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1e293b;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .logout-btn {
+            background-color: #ef4444;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #dc2626;
+        }
+
+        /* Main container */
+        .container {
+            padding: 30px;
+        }
+
+        .container h1 {
+            margin-bottom: 25px;
+            color: #1e293b;
+        }
+
+        /* Cards layout */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* Individual card */
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card h3 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .card a {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .card a:hover {
+            background-color: #002792;
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <div class="navbar">
+        <h2>Student Management System</h2>
+        <a href="{% url 'main_app:logout' %}" class="logout-btn">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Add Student</h3>
+                <p>Register new students</p>
+                <a href="{% url 'admin_panal:add_student' %}">Open</a>
+            </div>
+
+            <div class="card">
+                <h3>View Students</h3>
+                <p>See all student records</p>
+                <a href="{% url 'admin_panal:view_students' %}">Open</a>
+            </div>
+
+            <div class="card">
+                <h3>Update Student</h3>
+                <p>Edit student details</p>
+                <a href="#">Open</a>
+            </div>
+
+            <div class="card">
+                <h3>Delete Student</h3>
+                <p>Remove student data</p>
+                <a href="#">Open</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
