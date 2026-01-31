@@ -1,37 +1,26 @@
-##Technologies Used
-[ Python,
-Django,
-HTML,
-CSS,
-MYSQL ,
-Virtual Environment (venv)]
-
-
-
-
-
-
-
-### Commands Used
-
-
-## to create a vertual envoirement
-python -m venv venv  
-
-## to activate venv
-venv\Scripts\activate  
-
-## to install djnago in venv
-pip install django  
-
-## to create a project
-django-admin startproject STUDENT_MGMNT 
-
-## go inside the project folder
-cd STUDENT_MGMNT 
-
-## to create an app
-python manage.py startapp app_name  
-
-
-python manage.py runserver
+asgiref==3.8.1
+contourpy==1.3.3
+cycler==0.12.1
+distlib==0.4.0
+Django==5.2
+filelock==3.19.1
+fonttools==4.61.1
+greenlet==3.3.0
+kiwisolver==1.4.9
+matplotlib==3.10.8
+myenv==201902.7
+mysqlclient==2.2.7
+numpy==2.4.0
+packaging==25.0
+pandas==2.3.3
+pillow==12.0.0
+platformdirs==4.4.0
+pyparsing==3.3.1
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
+SQLAlchemy==2.0.45
+sqlparse==0.5.3
+typing_extensions==4.15.0
+tzdata==2025.2
+virtualenv==20.34.0
