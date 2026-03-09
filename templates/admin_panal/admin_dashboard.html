@@ -54,9 +54,10 @@
 
         /* Cards layout */
         .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+          gap: 24px;
+          padding: 0 24px;
         }
 
         /* Individual card */
@@ -114,22 +115,12 @@
             </div>
 
             <div class="card">
-                <h3>View Students</h3>
+                <h3>View Students/ Update/ Delete</h3>
                 <p>See all student records</p>
                 <a href="{% url 'admin_panal:view_students' %}">Open</a>
             </div>
 
-            <div class="card">
-                <h3>Update Student</h3>
-                <p>Edit student details</p>
-                <a href="#">Open</a>
-            </div>
-
-            <div class="card">
-                <h3>Delete Student</h3>
-                <p>Remove student data</p>
-                <a href="#">Open</a>
-            </div>
+            
 
         </div>
     </div>

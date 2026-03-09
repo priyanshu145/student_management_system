@@ -25,13 +25,13 @@ venv\Scripts\activate
 pip install django  
 
 ## to create a project
-django-admin startproject STUDENT_MGMNT 
+django-admin startproject student_management_system
 
 ## go inside the project folder
-cd STUDENT_MGMNT 
+cd student_management_system
 
-## to create an app
-python manage.py startapp app_name  
+## to create  apps
+python manage.py startapp main_app  
 
 
 python manage.py runserver

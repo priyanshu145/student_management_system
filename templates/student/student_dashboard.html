@@ -22,6 +22,21 @@
             font-size: 22px;
         }
 
+
+        .profile-container {
+           text-align: center;
+        }
+
+        .profile-pic {
+           width: 120px;
+           height: 120px;
+           border-radius: 50%;
+           cursor: pointer;
+           border: 2px solid #4CAF50;
+           object-fit: cover;
+        }
+
+
         /* Sidebar */
         .sidebar {
             width: 220px;
@@ -89,6 +104,22 @@
     <div class="header">
         Student Dashboard
     </div>
+
+    <div class="profile-container">
+       <label for="profile-upload">
+          <img 
+            src="{% if student.profile_photo %}{{ student.profile_photo.url }}{% else %}/static/images/user.png{% endif %}" 
+            class="profile-pic"
+            alt="Profile"
+          >
+       </label>
+
+       <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" id="profile-upload" name="profile_photo" hidden onchange="this.form.submit()">
+       </form>
+    </div>
+
 
     <div class="sidebar">
         <a href="#">Dashboard</a>
