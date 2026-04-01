@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from student.models import Student
+from teacher.models import Teacher
 
 @login_required
 def add_student(request):
@@ -11,12 +12,12 @@ def add_student(request):
         return render(request, 'error.html')
 
     if request.method == 'POST':
-        full_name = request.POST['full_name']
-        username = request.POST['username']
-        password = request.POST['password']
-        roll_no = request.POST['roll_no']
-        email = request.POST['email']
-        course = request.POST['course']
+        full_name = request.POST.get['full_name']
+        username = request.POST.get['username']
+        password = request.POST.get['password']
+        roll_no = request.POST.get['roll_no']
+        email = request.POST.get['email']
+        course = request.POST.get['course']
 
         # check username already exists
         if User.objects.filter(username=username).exists():
@@ -45,6 +46,60 @@ def add_student(request):
         })
 
     return render(request, 'admin_panal/add_student.html')
+
+
+#adding teacher
+@login_required
+def add_teacher(request):
+
+    if not request.user.is_superuser:
+        return render(request, 'error.html', {'error': 'Access denied'})
+
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        salary = request.POST.get('salary')
+        qualification = request.POST.get('qualification')
+        experience = request.POST.get('experience')
+
+        # simple validation
+        if not all([full_name, username, password, email]):
+            return render(request, 'admin_panal/add_teacher.html', {
+                'error': 'Please fill all required fields'
+            })
+
+        # check username
+        if User.objects.filter(username=username).exists():
+            return render(request, 'admin_panal/add_teacher.html', {
+                'error': 'Username already exists'
+            })
+
+        # create user + teacher
+        user = User.objects.create_user(
+            username=username,
+            password=password,
+            email=email
+        )
+
+        Teacher.objects.create(
+            user=user,   # must exist in model
+            full_name=full_name,
+            email=email,
+            phone=phone,
+            salary=salary,
+            qualification=qualification,
+            experience=experience
+        )
+
+        return render(request, 'admin_panal/add_teacher.html', {
+            'success': 'Teacher added successfully'
+        })
+
+    return render(request, 'admin_panal/add_teacher.html')
+    
 
 
 # Create your views here.

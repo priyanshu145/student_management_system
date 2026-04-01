@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from student.models import Student
+from teacher.models import Teacher
 
 # Create your views here.
 
 def student_login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get['username']
+        password = request.POST.get['password']
         
         user =authenticate(username=username, password=password)
         
@@ -17,14 +18,14 @@ def student_login(request):
             
             #if user is student
             if Student.objects.filter(user=user).exists():
-               login (request, user)
+               login(request, user)
                return redirect('authentication:student_dashboard')
             else :
                 return render(request, 'authentication/student_login.html' , 
                               {'Error': 'you are not a student'})
         
         else :
-            return render(request, 'authenticatetion/student_login.html', {'Error': 'invalid user name or password'})        
+            return render(request, 'authentication/student_login.html', {'Error': 'invalid user name or password'})        
     
         
             
@@ -34,6 +35,31 @@ def student_login(request):
 def student_dashboard(request):
     return render(request, 'student/student_dashboard.html')
 
+def teacher_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user = authenticate(username= username, password= password)
+        #check if user is not none
+        if user is not None:
+            #check if user is teacher
+            if Teacher.objects.filter(user=user).exists():
+                login (request, user)
+                return redirect('authentication:teacher_dashboard')
+            else:
+                return render(request, 'authentication:teacher_login.html')
+        
+        
+        else:
+            return render(request, 'teacher_login.html', {'ERROR':'invalid user name or password '})
+    return render(request, 'authentication/teacher_login.html' , {'Error': 'you are not a teacher'})
+
+@login_required
+def teacher_dashboard(request):
+    return render(request, 'teacher/teacher_dashboard.html')
+    
+    
 
 
 def admin_login(request):

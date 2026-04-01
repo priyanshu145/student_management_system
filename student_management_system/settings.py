@@ -40,6 +40,7 @@ DEBUG = True
 
 INSTALLED_APPS = [
     'admin_panal',
+    'teacher',
     'student',
     'main_app',
     'authentication',

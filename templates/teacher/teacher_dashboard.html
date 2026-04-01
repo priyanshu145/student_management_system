@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            padding: 8px 15px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            height: 100vh;
+            background: #34495e;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+        }
+
+        .sidebar a:hover {
+            background: #1abc9c;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        /* Cards */
+        .cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+
+        .card p {
+            color: gray;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        table th, table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background: #2c3e50;
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Teacher Dashboard</h2>
+        <button class="logout-btn">Logout</button>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#">Dashboard</a>
+        <a href="#">Manage Students</a>
+        <a href="#">Mark Attendance</a>
+        <a href="#">View Attendance</a>
+        <a href="#">Subjects</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+
+        <!-- Cards -->
+        <div class="cards">
+            <div class="card">
+                <h3>120</h3>
+                <p>Total Students</p>
+            </div>
+
+            <div class="card">
+                <h3>5</h3>
+                <p>Subjects</p>
+            </div>
+
+            <div class="card">
+                <h3>3</h3>
+                <p>Lectures Today</p>
+            </div>
+
+            <div class="card">
+                <h3>85%</h3>
+                <p>Attendance</p>
+            </div>
+        </div>
+
+        <!-- Recent Activity Table -->
+        <h3 style="margin-top:30px;">Recent Attendance</h3>
+
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <th>Subject</th>
+                <th>Status</th>
+            </tr>
+
+            <tr>
+                <td>Rahul</td>
+                <td>Math</td>
+                <td>Present</td>
+            </tr>
+
+            <tr>
+                <td>Aman</td>
+                <td>Science</td>
+                <td>Absent</td>
+            </tr>
+
+        </table>
+
+    </div>
+
+</body>
+</html>

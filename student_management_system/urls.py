@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin_panal/', include('admin_panal.urls')),
     path('authentication/', include('authentication.urls')),
     path('student/', include('student.urls')),
+    path('teacher/', include('teacher.urls')),
 ]
