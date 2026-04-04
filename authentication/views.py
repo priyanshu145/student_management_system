@@ -48,7 +48,7 @@ def teacher_login(request):
                 login (request, user)
                 return redirect('authentication:teacher_dashboard')
             else:
-                return render(request, 'authentication:teacher_login.html')
+                return render(request, 'authentication/teacher_login.html')
         
         
         else:
