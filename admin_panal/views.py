@@ -12,12 +12,12 @@ def add_student(request):
         return render(request, 'error.html')
 
     if request.method == 'POST':
-        full_name = request.POST.get['full_name']
-        username = request.POST.get['username']
-        password = request.POST.get['password']
-        roll_no = request.POST.get['roll_no']
-        email = request.POST.get['email']
-        course = request.POST.get['course']
+        full_name = request.POST.get('full_name')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        roll_no = request.POST.get('roll_no')
+        email = request.POST.get('email')
+        course = request.POST.get('course')
 
         # check username already exists
         if User.objects.filter(username=username).exists():
