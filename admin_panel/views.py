@@ -21,7 +21,7 @@ def add_student(request):
 
         # check username already exists
         if User.objects.filter(username=username).exists():
-            return render(request, 'admin_panal/add_student.html', {
+            return render(request, 'admin_panel/add_student.html', {
                 'error': 'Username already exists'
             })
 
@@ -41,11 +41,11 @@ def add_student(request):
             course=course
         )
 
-        return render(request, 'admin_panal/add_student.html', {
+        return render(request, 'admin_panel/add_student.html', {
             'success': 'Student added successfully'
         })
 
-    return render(request, 'admin_panal/add_student.html')
+    return render(request, 'admin_panel/add_student.html')
 
 
 #adding teacher
@@ -67,13 +67,13 @@ def add_teacher(request):
 
         # simple validation
         if not all([full_name, username, password, email]):
-            return render(request, 'admin_panal/add_teacher.html', {
+            return render(request, 'admin_panel/add_teacher.html', {
                 'error': 'Please fill all required fields'
             })
 
         # check username
         if User.objects.filter(username=username).exists():
-            return render(request, 'admin_panal/add_teacher.html', {
+            return render(request, 'admin_panel/add_teacher.html', {
                 'error': 'Username already exists'
             })
 
@@ -94,11 +94,11 @@ def add_teacher(request):
             experience=experience
         )
 
-        return render(request, 'admin_panal/add_teacher.html', {
+        return render(request, 'admin_panel/add_teacher.html', {
             'success': 'Teacher added successfully'
         })
 
-    return render(request, 'admin_panal/add_teacher.html')
+    return render(request, 'admin_panel/add_teacher.html')
     
 
 
@@ -106,7 +106,7 @@ def add_teacher(request):
 @login_required
 def view_students(request):
     students = Student.objects.all()
-    return render(request, 'admin_panal/view_students.html', {'students': students})
+    return render(request, 'admin_panel/view_students.html', {'students': students})
 
 @login_required
 def edit_student(request, id):
@@ -118,9 +118,9 @@ def edit_student(request, id):
         student.email = request.POST['email']
         student.course = request.POST['course']
         student.save()
-        return redirect('admin_panal:view_students')
+        return redirect('admin_panel:view_students')
 
-     return render(request, 'admin_panal/edit_student.html', {'student': student})
+     return render(request, 'admin_panel/edit_student.html', {'student': student})
     
 
 @login_required
@@ -131,4 +131,4 @@ def delete_student(request, id):
         student.delete()
         return redirect('student:view_students')
 
-    return render(request, 'admin_panal/delete_student.html', {'student': student})
+    return render(request, 'admin_panel/delete_student.html', {'student': student})

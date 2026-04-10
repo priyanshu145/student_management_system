@@ -6,7 +6,6 @@
     <title>Student Management System</title>
 
     <style>
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
@@ -14,10 +13,10 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(to right, #74ebd5, #9face6);
-            color: #333;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         header {
@@ -25,39 +24,61 @@
             color: white;
             padding: 25px;
             text-align: center;
+            position: relative;
+            z-index: 1001;
         }
 
-        header h2 {
-            font-size: 32px;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        nav {
-            background: #162447;
-            padding: 12px;
-            text-align: center;
-        }
-
-        nav a {
+        /* Hamburger */
+        .menu-toggle {
+            font-size: 28px;
             color: white;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -250px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: #162447;
+            padding-top: 100px;
+            transition: left 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 25px 25px;
             text-decoration: none;
-            margin: 0 18px;
-            font-size: 16px;
-            font-weight: 500;
         }
 
-        nav a:hover {
-            color: #f6c90e;
+        .sidebar a:hover {
+            background: #f6c90e;
+            color: #162447;
+            
         }
 
+        .sidebar.active {
+            left: 0;
+        }
+
+        /* Container */
         .container {
             padding: 60px 20px;
             text-align: center;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* Move content when sidebar open */
+        .sidebar.active ~ .container {
+            margin-left: 250px;
         }
 
         .container h1 {
@@ -70,7 +91,6 @@
             font-size: 18px;
             max-width: 650px;
             margin: auto;
-            line-height: 1.6;
         }
 
         .buttons {
@@ -85,8 +105,7 @@
             color: white;
             text-decoration: none;
             border-radius: 30px;
-            font-size: 16px;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         .buttons a:hover {
@@ -103,7 +122,6 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            font-size: 14px;
         }
     </style>
 </head>
@@ -111,38 +129,47 @@
 <body>
 
 <header>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
     <h2>Student Management System</h2>
     <p>Manage Students | Courses | Records</p>
 </header>
 
-<nav>
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
     <a href="#">Home</a>
     <a href="#">Students</a>
     <a href="#">Courses</a>
     <a href="#">Results</a>
     <a href="#">Contact</a>
-</nav>
+</div>
 
+<!-- Main Content -->
 <div class="container">
     <h1>Welcome to Student Management System</h1>
-    <p>
-        A simple platform to manage student records and academic performance.
-    </p>
+    <p>A simple platform to manage student records and academic performance.</p>
 
     <div class="buttons">
-
         <a href="{% url 'authentication:teacher_login' %}">Teacher Login</a>
         <a href="{% url 'authentication:admin_login' %}">Admin Login</a>
+<<<<<<< HEAD
         <a href="{% url 'authentication:result_login' %}">Result</a>
 
+=======
+>>>>>>> c25b726373923123cae0b5c7a63bd47927697a3d
         <a href="{% url 'authentication:student_login' %}">Student Login</a>
-
     </div>
 </div>
 
 <footer>
     © 2026 Student Management System
 </footer>
+
+<!-- JS -->
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
 
 </body>
 </html>

@@ -89,6 +89,7 @@ def admin_login(request):
 
 @login_required
 def admin_dashboard(request):
+<<<<<<< HEAD
     return render(request, 'admin_panal/admin_dashboard.html')    
 
 
@@ -98,3 +99,6 @@ def admin_dashboard(request):
 
 
 
+=======
+    return render(request, 'admin_panel/admin_dashboard.html')    
+>>>>>>> c25b726373923123cae0b5c7a63bd47927697a3d

@@ -100,7 +100,7 @@
 
     <div class="top-bar">
         <h2>Student List</h2>
-        <a href="{% url 'admin_panal:add_student' %}" class="add-btn">+ Add Student</a>
+        <a href="{% url 'admin_panel:add_student' %}" class="add-btn">+ Add Student</a>
     </div>
 
     <table>
@@ -125,8 +125,8 @@
                 <td>{{ student.email }}</td>
                 <td>{{ student.course }}</td>
                 <td>
-                    <a href="{% url 'admin_panal:edit_student' student.id %}" class="action-btn edit-btn">Edit</a>
-                    <a href="{% url 'admin_panal:delete_student' student.id %}" class="action-btn delete-btn"
+                    <a href="{% url 'admin_panel:edit_student' student.id %}" class="action-btn edit-btn">Edit</a>
+                    <a href="{% url 'admin_panel:delete_student' student.id %}" class="action-btn delete-btn"
                        onclick="return confirm('Are you sure you want to delete this student?');">
                         Delete
                     </a>

@@ -4,7 +4,7 @@ from . import views
 
 
 
-app_name = 'admin_panal'
+app_name = 'admin_panel'
 
 urlpatterns = [
     path('add_student/', views.add_student , name='add_student'),

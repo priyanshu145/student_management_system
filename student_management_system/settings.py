@@ -1,3 +1,11 @@
+from pathlib import Path
+import os
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 """
 Django settings for student_management_system project.
 
@@ -39,7 +47,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_panal',
+    'admin_panel',
     'teacher',
     'student',
     'main_app',
@@ -142,3 +150,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
