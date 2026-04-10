@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Result Login</title>
+</head>
+<body>
+    <h2>Student Result Login</h2>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Roll Number:</label>
+        <input type="text" name="roll_no" required><br><br>
+
+        <label>Date of Birth:</label>
+        <input type="date" name="dob" required><br><br>
+
+        <button type="submit">View Result</button>
+    </form>
+</body>
+</html>

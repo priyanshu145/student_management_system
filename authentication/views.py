@@ -90,3 +90,11 @@ def admin_login(request):
 @login_required
 def admin_dashboard(request):
     return render(request, 'admin_panal/admin_dashboard.html')    
+
+
+
+
+
+
+
+
