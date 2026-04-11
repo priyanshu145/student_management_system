@@ -5,5 +5,5 @@ from . import views
 app_name = 'teacher'
 
 urlpatterns = [
-   
+   path("add_marks/", views.add_marks, name="add_marks")
 ]
