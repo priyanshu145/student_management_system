@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from student.models import Student
 from teacher.models import Teacher
+from result.models import Result
 
 # Create your views here.
 
@@ -29,7 +30,7 @@ def student_login(request):
     
         
             
-    return render(request, 'authentication/student_login.html' , {'Error': 'you are not a student'})
+    return render(request, 'authentication/student_login.html')
 
 @login_required
 def student_dashboard(request):
@@ -89,12 +90,37 @@ def admin_login(request):
 
 @login_required
 def admin_dashboard(request):
-    return render(request, 'admin_panal/admin_dashboard.html')    
+    return render(request, 'admin_panal/admin_dashboard.html')  
 
 
 
 
+def result_login(request):
+    if request.method == 'POST':
+        roll_no = request.POST.get('roll_no')
+        date_of_birth = request.POST.get('date_of_birth')
 
+        try:
+            student = Student.objects.get(
+                roll_no=roll_no,
+                date_of_birth=date_of_birth
+            )
 
+            result = Result.objects.get(student=student)
 
+            return render(request, 'result/result_dash.html', {
+                'student': student,
+                'result': result
+            })
 
+        except Student.DoesNotExist:
+            return render(request, 'authentication/result_login.html', {
+                'error': 'Invalid roll number or date of birth'
+            })
+
+        except Result.DoesNotExist:
+            return render(request, 'authentication/result_login.html', {
+                'error': 'Result not found'
+            })
+
+    return render(request, 'authentication/result_login.html')

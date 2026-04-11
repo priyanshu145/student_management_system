@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'admin_panal',
     'teacher',
     'student',
+    'result',
     'main_app',
     'authentication',
     'django.contrib.admin',
