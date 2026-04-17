@@ -9,8 +9,8 @@ from result.models import Result
 
 def student_login(request):
     if request.method == 'POST':
-        username = request.POST.get['username']
-        password = request.POST.get['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         
         user =authenticate(username=username, password=password)
         
@@ -124,3 +124,33 @@ def result_login(request):
             })
 
     return render(request, 'authentication/result_login.html')
+
+
+def ai_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        user =authenticate(username=username, password=password)
+        
+        #check if user is not none
+        if user is not None:
+            
+            #if user is student
+            if Student.objects.filter(user=user).exists():
+               login(request, user)
+               return redirect('authentication:ai_analysis')
+            else :
+                return render(request, 'authentication/ai_login.html' , 
+                              {'Error': 'you are not a student'})
+        
+        else :
+            return render(request, 'authentication/ai_login.html', {'Error': 'invalid user name or password'})        
+    
+        
+            
+    return render(request, 'authentication/ai_login.html')
+
+@login_required
+def ai_analysis(request):
+    return render(request, 'student/ai_analysis.html')
