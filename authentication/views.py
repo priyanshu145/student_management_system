@@ -154,3 +154,4 @@ def ai_login(request):
 @login_required
 def ai_analysis(request):
     return render(request, 'student/ai_analysis.html')
+

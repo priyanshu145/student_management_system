@@ -1,130 +1,176 @@
-{%  load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student_Login</title>
+    <title>Student Login</title>
+
     <style>
-        /* Reset some default styles */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
         body {
+            min-height: 100vh;
             font-family: Arial, sans-serif;
-            background: #f4f6f8;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a, #2563eb);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            padding: 20px;
         }
 
         .login-container {
-            background: #fff;
-            padding: 30px 25px;
-            width: 350px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            color: white;
         }
 
         .login-container h2 {
             text-align: center;
-            margin-bottom: 25px;
-            color: #333;
+            margin-bottom: 8px;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #dbeafe;
+            margin-bottom: 28px;
         }
 
         label {
             display: block;
+            margin-bottom: 8px;
+            margin-top: 16px;
+            font-size: 14px;
             font-weight: bold;
-            margin-top: 15px;
-            margin-bottom: 5px;
+            color: #e0f2fe;
         }
 
-        input[type="text"], input[type="password"] {
+        input[type="text"],
+        input[type="password"] {
             width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            padding: 13px 14px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.92);
+            color: #1e293b;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
-            border-color: #007bff;
-            outline: none;
+        input:focus {
+            box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.6);
         }
 
         .error-message {
-            color: red;
-            margin-top: 10px;
-            font-size: 14px;
+            background: rgba(255, 77, 77, 0.15);
+            color: #ffe4e6;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
             text-align: center;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         button {
             width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-            background: #007bff;
+            margin-top: 24px;
+            padding: 13px;
             border: none;
-            color: white;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #1e3a8a;
             font-size: 16px;
-            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
+            transition: 0.3s ease;
         }
 
         button:hover {
-            background: #0056b3;
+            background: #dbeafe;
+            transform: translateY(-2px);
         }
 
         .forgot-password {
             text-align: right;
-            margin-top: 10px;
-            font-size: 14px;
+            margin-top: 14px;
         }
 
         .forgot-password a {
-            color: #007bff;
+            color: #dbeafe;
             text-decoration: none;
+            font-size: 14px;
         }
 
         .forgot-password a:hover {
             text-decoration: underline;
         }
+
+        .student-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 28px 20px;
+            }
+
+            .login-container h2 {
+                font-size: 25px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="login-container">
-    <h2>student_login</h2>
-    
-    <form method="POST">
-        {% csrf_token %}
-        
-        <!-- Username / Email -->
-        <label>Username</label>
-        <input type="text" name="username" placeholder="Enter your Username" required>
+    <div class="login-container">
+        <div class="student-icon">🎓</div>
+        <h2>Student Login</h2>
+        <p class="subtitle">Access your dashboard and AI analysis</p>
 
-        <!-- Password -->
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Enter your password" required>
+        <form method="POST">
+            {% csrf_token %}
 
-        <!-- Error Message -->
-        {% if error %}
-            <div class="error-message">{{ error }}</div>
-        {% endif %}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
-        <!-- Login Button -->
-        <button type="submit">Login</button>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-        <!-- Optional: Forgot Password -->
-        <div class="forgot-password">
-            <a href="#">Forgot Password?</a>
-        </div>
-    </form>
-</div>
+            {% if error %}
+                <div class="error-message">{{ error }}</div>
+            {% endif %}
+
+            <button type="submit">Login</button>
+
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
 
 </body>
 </html>

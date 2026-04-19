@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan Exam Copy</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: white;
+        }
+
+        .box {
+            width: 420px;
+            background: rgba(255,255,255,0.12);
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            background: white;
+            color: black;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 22px;
+            border: none;
+            border-radius: 10px;
+            background: orange;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkorange;
+        }
+
+        .error {
+            margin-top: 15px;
+            color: #ffb3b3;
+        }
+
+        p {
+            color: #dbeafe;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>📷 Scan Your Answer Sheet</h2>
+    <p>Upload any exam copy image and get instant analysis</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload & Analyze</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+</div>
+
+</body>
+</html>

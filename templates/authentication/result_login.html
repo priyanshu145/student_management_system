@@ -1,72 +1,128 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Result Login</title>
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #667eea, #764ba2);
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e3a8a, #2563eb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
         .container {
-            width: 350px;
-            margin: 100px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            padding: 35px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            color: white;
             text-align: center;
         }
 
         h2 {
-            margin-bottom: 20px;
-            color: #333;
+            margin-bottom: 8px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #dbeafe;
+            margin-bottom: 25px;
         }
 
         label {
             display: block;
             text-align: left;
-            margin-top: 10px;
+            margin-top: 16px;
+            margin-bottom: 6px;
+            font-size: 14px;
             font-weight: bold;
-            color: #555;
+            color: #e0f2fe;
         }
 
         input {
             width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 13px;
+            border-radius: 10px;
+            border: none;
             outline: none;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.92);
+            color: #1e293b;
         }
 
         input:focus {
-            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.6);
         }
 
         button {
             width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            background: #667eea;
+            padding: 13px;
+            margin-top: 22px;
             border: none;
-            color: white;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #1e3a8a;
             font-size: 16px;
-            border-radius: 5px;
+            font-weight: bold;
             cursor: pointer;
+            transition: 0.3s ease;
         }
 
         button:hover {
-            background: #5a67d8;
+            background: #dbeafe;
+            transform: translateY(-2px);
         }
 
         .error {
-            color: red;
-            margin-bottom: 10px;
+            background: rgba(255, 77, 77, 0.15);
+            color: #ffe4e6;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .result-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.18);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 28px 20px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
@@ -74,19 +130,21 @@
 <body>
 
 <div class="container">
-    <h2>Student Result Login</h2>
+    <div class="result-icon">📊</div>
+    <h2>Result Access</h2>
+    <p class="subtitle">Enter your details to view your result</p>
 
     {% if error %}
-        <p class="error">{{ error }}</p>
+        <div class="error">{{ error }}</div>
     {% endif %}
 
     <form method="POST">
         {% csrf_token %}
 
-        <label>Roll Number:</label>
-        <input type="text" name="roll_no" required>
+        <label>Roll Number</label>
+        <input type="text" name="roll_no" placeholder="Enter your roll number" required>
 
-        <label>Date of Birth:</label>
+        <label>Date of Birth</label>
         <input type="date" name="dob" required>
 
         <button type="submit">View Result</button>

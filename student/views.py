@@ -7,34 +7,33 @@ from .ai_utils import predict_performance
 
 @login_required
 def ai_analysis(request):
-    try:
-        student = Student.objects.get(user=request.user)
-        result = Result.objects.get(student=student)
+    student = Student.objects.filter(user=request.user).first()
 
-        # for now static attendance
-        attendance_percentage = 72
-
-        analysis = predict_performance(result, attendance_percentage)
-
-        context = {
-            'student': student,
-            'result': result,
-            'attendance_percentage': attendance_percentage,
-            'prediction': analysis['prediction'],
-            'weak_subjects': analysis['weak_subjects'],
-            'suggestions': analysis['suggestions'],
-            'recommended_courses': analysis['recommended_courses'],
-        }
-
-        return render(request, 'student/ai_analysis.html', context)
-
-    except Student.DoesNotExist:
+    if not student:
         return render(request, 'student/ai_analysis.html', {
             'error': 'Student profile not found'
         })
 
-    except Result.DoesNotExist:
+    result = Result.objects.filter(student=student).first()
+
+    if not result:
         return render(request, 'student/ai_analysis.html', {
-            'error': 'Result data not found'
+            'error': 'Result data not found',
+            'student': student,
         })
 
+    attendance_percentage = 72
+
+    analysis = predict_performance(result, attendance_percentage)
+
+    context = {
+        'student': student,
+        'result': result,
+        'attendance_percentage': attendance_percentage,
+        'prediction': analysis.get('prediction', 'Not Available'),
+        'weak_subjects': analysis.get('weak_subjects', []),
+        'suggestions': analysis.get('suggestions', []),
+        'recommended_courses': analysis.get('recommended_courses', []),
+    }
+
+    return render(request, 'student/ai_analysis.html', context)

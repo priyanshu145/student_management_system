@@ -15,4 +15,5 @@ urlpatterns = [
      path("ai_login/", views.ai_login, name="ai_login"),
      path("ai_analysis/", views.ai_analysis, name="ai_analysis"),
      
+     
 ]
