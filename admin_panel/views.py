@@ -16,6 +16,7 @@ def add_student(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         roll_no = request.POST.get('roll_no')
+        date_of_birth = request.POST.get('date_of_birth')
         email = request.POST.get('email')
         course = request.POST.get('course')
 
@@ -37,6 +38,7 @@ def add_student(request):
             user=user,
             full_name=full_name,
             roll_no=roll_no,
+            date_of_birth=date_of_birth,
             email=email,
             course=course
         )

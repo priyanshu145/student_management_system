@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Performance Analysis</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+            color:white;
+        }
+
+        .container{
+            width:90%;
+            max-width:1000px;
+            margin:40px auto;
+        }
+
+        .title{
+            text-align:center;
+            font-size:34px;
+            margin-bottom:30px;
+        }
+
+        .card{
+            background: rgba(255,255,255,0.08);
+            border-radius:20px;
+            padding:25px;
+            margin-bottom:25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        h2{
+            color:#38bdf8;
+            margin-bottom:15px;
+        }
+
+        p, li{
+            font-size:18px;
+            line-height:1.7;
+        }
+
+        ul{
+            padding-left:20px;
+        }
+
+        .badge{
+            display:inline-block;
+            padding:10px 18px;
+            border-radius:30px;
+            background:#22c55e;
+            color:white;
+            font-weight:bold;
+            margin-top:10px;
+        }
+
+        .error{
+            background:#7f1d1d;
+            padding:15px;
+            border-radius:12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">AI Performance Analysis</h1>
+
+        {% if error %}
+            <div class="card error">
+                <p>{{ error }}</p>
+            </div>
+        {% else %}
+
+        <div class="card">
+            <h2>Student Information</h2>
+            <p><strong>Name:</strong> {{ student.full_name }}</p>
+            <p><strong>Roll No:</strong> {{ student.roll_no }}</p>
+            <p><strong>Attendance:</strong> {{ attendance_percentage }}%</p>
+            <p><strong>Percentage:</strong> {{ result.percentage }}%</p>
+        </div>
+
+        <div class="card">
+            <h2>Predicted Performance</h2>
+            <span class="badge">{{ prediction }}</span>
+        </div>
+
+        <div class="card">
+            <h2>Weak Subjects</h2>
+            {% if weak_subjects %}
+                <ul>
+                    {% for subject in weak_subjects %}
+                        <li>{{ subject }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No weak subjects detected. Keep it up.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Improvement Suggestions</h2>
+            <ul>
+                {% for item in suggestions %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Recommended Courses / Topics</h2>
+            <ul>
+                {% for course in recommended_courses %}
+                    <li>{{ course }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        {% endif %}
+    </div>
+</body>
+</html>

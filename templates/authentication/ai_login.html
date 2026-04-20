@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Student Login</title>
 
     <style>
         * {
@@ -72,8 +72,7 @@
             color: #1e293b;
         }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
+        input:focus {
             box-shadow: 0 0 0 2px rgba(147, 197, 253, 0.6);
         }
 
@@ -122,7 +121,7 @@
             text-decoration: underline;
         }
 
-        .admin-icon {
+        .student-icon {
             width: 70px;
             height: 70px;
             margin: 0 auto 18px;
@@ -148,9 +147,9 @@
 <body>
 
     <div class="login-container">
-        <div class="admin-icon">🔐</div>
-        <h2>Admin Login</h2>
-        <p class="subtitle">Welcome back! Please login to continue</p>
+        <div class="student-icon">🎓</div>
+        <h2>Student Login</h2>
+        <p class="subtitle">Access your dashboard and AI analysis</p>
 
         <form method="POST">
             {% csrf_token %}

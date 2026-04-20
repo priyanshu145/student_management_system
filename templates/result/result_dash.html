@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #dbeafe, #eff6ff);
+        }
+
+        .container {
+            width: 85%;
+            max-width: 900px;
+            margin: 40px auto;
+            background: #ffffff;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #1d4ed8;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .student-info {
+            padding: 25px 30px 10px 30px;
+        }
+
+        .student-info h3 {
+            margin-bottom: 20px;
+            color: #1e3a8a;
+            border-bottom: 2px solid #dbeafe;
+            padding-bottom: 8px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            padding: 14px;
+            border-left: 4px solid #2563eb;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            color: #111827;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .result-section {
+            padding: 10px 30px 30px 30px;
+        }
+
+        .result-section h3 {
+            margin-bottom: 18px;
+            color: #1e3a8a;
+            border-bottom: 2px solid #dbeafe;
+            padding-bottom: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        table th {
+            background: #2563eb;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #e5e7eb;
+            background: #ffffff;
+        }
+
+        table tr:nth-child(even) td {
+            background: #f9fafb;
+        }
+
+        .summary {
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .summary-box {
+            background: #eff6ff;
+            padding: 18px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #bfdbfe;
+        }
+
+        .summary-box h4 {
+            margin: 0 0 8px 0;
+            color: #1e40af;
+        }
+
+        .summary-box p {
+            margin: 0;
+            font-size: 22px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 18px;
+            background: #f8fafc;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .header h2 {
+                font-size: 22px;
+            }
+
+            .student-info,
+            .result-section {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            table th,
+            table td {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h2>Student Result Dashboard</h2>
+        </div>
+
+        <div class="student-info">
+            <h3>Student Information</h3>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <strong>Student Name</strong>
+                    {{ student.full_name }}
+                </div>
+
+                <div class="info-box">
+                    <strong>Roll Number</strong>
+                    {{ student.roll_no }}
+                </div>
+
+                <div class="info-box">
+                    <strong>Date of Birth</strong>
+                    {{ student.date_of_birth }}
+                </div>
+
+                <div class="info-box">
+                    <strong>Course</strong>
+                    {{ student.course }}
+                </div>
+            </div>
+        </div>
+
+        <div class="result-section">
+            <h3>Result Details</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ result.subject1 }}</td>
+                        <td>{{ result.marks1 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ result.subject2 }}</td>
+                        <td>{{ result.marks2 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ result.subject3 }}</td>
+                        <td>{{ result.marks3 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ result.subject4 }}</td>
+                        <td>{{ result.marks4 }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ result.subject5 }}</td>
+                        <td>{{ result.marks5 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="summary">
+                <div class="summary-box">
+                    <h4>Total Marks</h4>
+                    <p>{{ result.total_marks }}</p>
+                </div>
+
+                <div class="summary-box">
+                    <h4>Percentage</h4>
+                    <p>{{ result.percentage }}%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Result generated from Student Management System
+        </div>
+    </div>
+
+</body>
+</html>
