@@ -1,3 +1,6 @@
-import os
-os.system("python manage.py runserver")
+import subprocess
+import sys
 
+subprocess.run([sys.executable, "manage.py", "runserver"])
+
+#python manage.py runserver
