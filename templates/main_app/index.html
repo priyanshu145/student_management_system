@@ -5,520 +5,598 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Performance Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+
+
+
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
+            background: #101727;
             color: #f8fafc;
+            overflow-x: hidden;
+            position: relative;
         }
 
+        /* Background glow orbs matching the image */
+         body::before {
+               content: "";
+               position: fixed;
+               inset: 0;
+
+               background:
+       /* 🔵 BLUE BLOB (made from multiple gradients) */
+                   radial-gradient(ellipse 280px 180px at 34% 72%, rgba(0, 81, 255, 0.9), transparent 70%),
+                   radial-gradient(ellipse 220px 140px at 42% 65%, rgba(0, 81, 255, 0.7), transparent 70%),
+                   radial-gradient(ellipse 180px 120px at 30% 78%, rgba(0, 81, 255, 0.6), transparent 70%),
+
+        /* 🟡 YELLOW BLOB */
+                  radial-gradient(ellipse 240px 180px at 74% 48%, rgba(255, 217, 0, 0.9), transparent 70%),
+                  radial-gradient(ellipse 180px 130px at 80% 42%, rgba(255, 217, 0, 0.7), transparent 70%),
+                  radial-gradient(ellipse 150px 110px at 70% 55%, rgba(255, 217, 0, 0.6), transparent 70%),
+
+        /* BACKGROUND */
+              linear-gradient(180deg, #081225 0%, #0d1833 100%);
+
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(4, 10, 25, 0.25);
+            z-index: -1;
+        }
+
+
+        /* Header */
         header {
-            padding: 24px;
+            position: relative;
+            z-index: 10;
+            padding: 22px 24px;
+            background-color: #00091f;
             text-align: center;
-            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0);
         }
 
-        header h2 { font-size: 28px; }
-        header p { color: #cbd5e1; }
+        .page-bot {
+            position: fixed;
+            bottom: 60px;
+            left: 40px;
+            width: 44px;
+            z-index: 9999;
+            cursor: pointer;
+            filter: drop-shadow(0 0 8px rgba(56,189,248,0.6));
+            transition: left 1.8s cubic-bezier(0.45,0,0.55,1),
+                        bottom 1.8s cubic-bezier(0.45,0,0.55,1);
+            user-select: none;
+        }
 
+        .page-bot.flip { transform: scaleX(-1); }
+
+        /* Head */
+        .bot-head {
+            width: 34px;
+            height: 28px;
+            background: linear-gradient(145deg, #1e3a5f, #0f2040);
+            border: 1.5px solid rgba(56,189,248,0.7);
+            border-radius: 10px 10px 6px 6px;
+            margin: 0 auto 2px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 0 10px rgba(56,189,248,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+        }
+
+        .bot-head::before {
+            content: '';
+            position: absolute;
+            top: -9px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 8px;
+            background: #38bdf8;
+            border-radius: 2px;
+        }
+
+        .bot-head::after {
+            content: '';
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #38bdf8;
+            animation: antennaBlink 1.4s infinite ease-in-out;
+        }
+
+        @keyframes antennaBlink {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px #38bdf8; }
+            50%       { opacity: 0.3; box-shadow: 0 0 3px #38bdf8; }
+        }
+
+        .bot-eye {
+            width: 8px;
+            height: 8px;
+            background: #38bdf8;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #38bdf8;
+            animation: eyeBlink 3.5s infinite;
+        }
+
+        @keyframes eyeBlink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95%            { transform: scaleY(0.1); }
+        }
+
+        .bot-mouth {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 3px;
+            background: #38bdf8;
+            border-radius: 3px;
+            opacity: 0.7;
+        }
+
+        /* Body */
+        .bot-body {
+            width: 38px;
+            height: 22px;
+            background: linear-gradient(145deg, #1a3357, #0d1e3a);
+            border: 1.5px solid rgba(56,189,248,0.5);
+            border-radius: 7px;
+            margin: 0 auto 2px;
+            position: relative;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        .bot-body::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #38bdf8 30%, transparent 80%);
+            border-radius: 50%;
+            animation: chestPulse 1.6s infinite ease-in-out;
+        }
+
+        @keyframes chestPulse {
+            0%, 100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+            50%       { opacity: 0.4; transform: translate(-50%,-50%) scale(0.7); }
+        }
+
+        /* Legs */
+        .bot-legs {
+            width: 34px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .bot-leg {
+            width: 8px;
+            height: 14px;
+            background: linear-gradient(180deg, #1e3a5f, #0f2040);
+            border: 1px solid rgba(56,189,248,0.5);
+            border-radius: 4px 4px 6px 6px;
+            transform-origin: top center;
+        }
+
+        .page-bot.walking .left-leg {
+            animation: leftWalk 0.38s infinite ease-in-out;
+        }
+
+        .page-bot.walking .right-leg {
+            animation: rightWalk 0.38s infinite ease-in-out;
+        }
+
+        @keyframes leftWalk {
+            0%, 100% { transform: rotate(28deg); }
+            50%       { transform: rotate(-28deg); }
+        }
+
+        @keyframes rightWalk {
+            0%, 100% { transform: rotate(-28deg); }
+            50%       { transform: rotate(28deg); }
+        }
+
+        /* Speech bubble */
+        .bot-bubble {
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(8, 20, 40, 0.95);
+            border: 1px solid rgba(56,189,248,0.4);
+            border-radius: 10px;
+            padding: 6px 10px;
+            font-size: 11px;
+            color: #7dd3fc;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .bot-bubble::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(56,189,248,0.4);
+        }
+
+        .page-bot:hover .bot-bubble { opacity: 1; }
+
+        header h2 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+
+        header p {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-top: 3px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Hamburger - glassy */
         .menu-toggle {
             position: absolute;
-            left: 20px;
-            top: 20px;
-            font-size: 24px;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             cursor: pointer;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+            transition: background 0.25s, box-shadow 0.25s;
         }
 
+        .menu-toggle:hover {
+            background: rgba(255, 255, 255, 0.13);
+            box-shadow: 0 6px 20px rgba(59,130,246,0.2), inset 0 1px 0 rgba(255,255,255,0.15);
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* Bell */
         .notice-toggle {
             position: absolute;
-            left: 60px;
-            top: 20px;
+            right: 64px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
             cursor: pointer;
+            color: #fbbf24;
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .notice-panel {
-            display: none;
+        .notice-badge {
             position: absolute;
-            top: 70px;
-            left: 20px;
-            width: 300px;
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 10px;
+            top: -5px;
+            right: -7px;
+            background: #ef4444;
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Notice panel */
+        .notice-panel {
+            position: absolute;
+            top: 78px;
+            right: 65px;
+            width: 330px;
+            background: rgba(8, 20, 40, 0.97);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 14px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+            padding: 16px;
+            z-index: 1100;
+            display: none;
         }
 
         .notice-panel.show { display: block; }
 
+        .notice-panel h3 {
+            font-size: 16px;
+            color: #f8fafc;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .notice-list { list-style: none; }
+
+        .notice-list li {
+            padding: 10px 10px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            font-size: 13px;
+            line-height: 1.5;
+            transition: 0.2s;
+        }
+
+        .notice-list li:hover {
+            background: rgba(56, 189, 248, 0.10);
+            color: #e0f2fe;
+        }
+
+        /* Sidebar */
         .sidebar {
             position: fixed;
-            left: -250px;
+            left: -270px;
             top: 0;
             width: 250px;
             height: 100%;
-            background: #1e293b;
-            padding-top: 100px;
-            transition: 0.3s;
+            background: rgba(5, 13, 26, 0.98);
+            border-right: 1px solid rgba(255,255,255,0.07);
+            padding-top: 90px;
+            transition: left 0.3s ease;
+            z-index: 1000;
         }
 
         .sidebar.active { left: 0; }
 
         .sidebar a {
             display: block;
-            padding: 15px;
-            color: white;
+            color: #cbd5e1;
             text-decoration: none;
-        }
-
-        .sidebar a:hover { background: #38bdf8; }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-        }
-
-        .hero-card {
-            max-width: 800px;
-            padding: 40px;
-            background: rgba(255,255,255,0.08);
-            border-radius: 20px;
-            text-align: center;
-        }
-
-        .hero-card h1 { font-size: 32px; margin-bottom: 15px; }
-        .hero-card p { margin-bottom: 25px; }
-
-        .buttons a {
-            display: inline-block;
-            margin: 8px;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            color: white;
-        }
-
-        .primary-btn { background: #0ea5e9; }
-        .secondary-btn { background: #475569; }
-        .scan-btn { background: #f97316; }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            background: rgba(15,23,42,0.8);
-        }
-    </style>
-</head>
-
-<body>
-
-<header>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
-    <div class="notice-toggle" onclick="toggleNotice()">🔔</div>
-
-    <h2>Student Performance Tracker</h2>
-    <p>Manage Students | Courses | Records</p>
-</header>
-
-<div id="noticePanel" class="notice-panel">
-    <h3>📢 Notices</h3>
-    <ul>
-        <li>Exam forms open till 25 April 2026</li>
-        <li>Tech fest registration started</li>
-        <li>AI workshop on Monday</li>
-        <li>75% attendance mandatory</li>
-        <li>Project review next week</li>
-    </ul>
-</div>
-
-<div id="sidebar" class="sidebar">
-    <a href="#">Home</a>
-    <a href="#">Students</a>
-    <a href="#">Courses</a>
-    <a href="#">Results</a>
-    <a href="#">Contact</a>
-</div>
-
-<div class="container">
-    <div class="hero-card">
-        <h1>Welcome to Student Performance Tracker</h1>
-        <p>Manage students, results and AI analysis in one system.</p>
-
-        <div class="buttons">
-            <a class="primary-btn" href="{% url 'authentication:teacher_login' %}">Teacher</a>
-            <a class="secondary-btn" href="{% url 'authentication:admin_login' %}">Admin</a>
-            <a class="secondary-btn" href="{% url 'authentication:result_login' %}">Result</a>
-            <a class="secondary-btn" href="{% url 'authentication:student_login' %}">Student</a>
-            <a class="primary-btn" href="{% url 'authentication:ai_login' %}">AI</a>
-            <a class="scan-btn" href="{% url 'scan:scan_upload' %}">Scan</a>
-        </div>
-    </div>
-</div>
-
-<footer>
-    © 2026 Student Management System
-</footer>
-
-<script>
-function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("active");
-}
-
-function toggleNotice() {
-    document.getElementById("noticePanel").classList.toggle("show");
-}
-</script>
-
-</body>
-</html>{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Management System</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-            color: #f8fafc;
-            overflow-x: hidden;
-        }
-
-        header {
-            width: 100%;
-            padding: 24px 70px 24px 80px;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-            position: relative;
-            z-index: 1001;
-            text-align: center;
-        }
-
-        header h2 {
-            font-size: 32px;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
-        }
-
-        header p {
+            padding: 15px 24px;
+            margin: 4px 10px;
+            border-radius: 10px;
             font-size: 15px;
-            color: #cbd5e1;
-            letter-spacing: 0.5px;
-        }
-
-        .menu-toggle {
-            font-size: 28px;
-            color: #38bdf8;
-            position: absolute;
-            top: 22px;
-            left: 24px;
-            cursor: pointer;
-            z-index: 1002;
-            transition: 0.3s ease;
-        }
-
-        .menu-toggle:hover {
-            color: #7dd3fc;
-            transform: scale(1.08);
-        }
-
-        .notice-toggle {
-            position: absolute;
-            top: 22px;
-            left: 70px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #fbbf24;
-            z-index: 1002;
-            transition: 0.3s ease;
-        }
-
-        .notice-toggle:hover {
-            transform: scale(1.08);
-            color: #fde68a;
-        }
-
-        .notice-badge {
-            position: absolute;
-            top: -6px;
-            right: -8px;
-            background: #ef4444;
-            color: white;
-            font-size: 11px;
-            font-weight: bold;
-            min-width: 18px;
-            height: 18px;
-            padding: 0 5px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
-        }
-
-        .notice-panel {
-            position: absolute;
-            top: 78px;
-            left: 65px;
-            width: 340px;
-            background: rgba(15, 23, 42, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
-            padding: 18px;
-            z-index: 1100;
-            display: none;
-        }
-
-        .notice-panel.show {
-            display: block;
-        }
-
-        .notice-panel h3 {
-            font-size: 18px;
-            color: #f8fafc;
-            margin-bottom: 14px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-            padding-bottom: 10px;
-        }
-
-        .notice-list {
-            list-style: none;
-        }
-
-        .notice-list li {
-            padding: 12px 10px;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #cbd5e1;
-            font-size: 14px;
-            line-height: 1.5;
-            transition: 0.3s ease;
-        }
-
-        .notice-list li:hover {
-            background: rgba(56, 189, 248, 0.12);
-            color: #e0f2fe;
-        }
-
-        .notice-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        .sidebar {
-            position: fixed;
-            left: -270px;
-            top: 0;
-            width: 270px;
-            height: 100%;
-            background: rgba(15, 23, 42, 0.96);
-            backdrop-filter: blur(16px);
-            padding-top: 110px;
-            transition: left 0.35s ease;
-            z-index: 1000;
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 8px 0 24px rgba(0, 0, 0, 0.25);
-        }
-
-        .sidebar.active {
-            left: 0;
-        }
-
-        .sidebar a {
-            display: block;
-            color: #e2e8f0;
-            text-decoration: none;
-            padding: 18px 28px;
-            margin: 8px 14px;
-            border-radius: 14px;
-            font-size: 16px;
-            transition: 0.3s ease;
+            transition: 0.25s;
         }
 
         .sidebar a:hover {
-            background: rgba(56, 189, 248, 0.16);
+            background: rgba(56, 189, 248, 0.12);
             color: #38bdf8;
-            transform: translateX(6px);
+            transform: translateX(4px);
         }
 
+        /* Main layout */
         .container {
-            min-height: calc(100vh - 140px);
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 74px - 50px);
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px 20px 100px;
-            transition: margin-left 0.35s ease;
+            padding: 50px 20px 80px;
         }
 
-        .sidebar.active ~ .container {
-            margin-left: 270px;
-        }
-
+        /* Hero card - matching image: dark bg, rounded corners, subtle blue border */
         .hero-card {
             width: 100%;
-            max-width: 950px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(18px);
-            border-radius: 28px;
-            padding: 55px 35px;
+            max-width: 840px;
+            background: rgba(0, 17, 51, 0.39);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(22, 111, 255, 0.58);
+            border-radius: 20px;
+            padding: 52px 40px 52px;
             text-align: center;
-            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+            position: relative;
+        }
+
+        /* Subtle card glow like in image */
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 21px;
+            
+            pointer-events: none;
+            z-index: -1;
         }
 
         .hero-card h1 {
-            font-size: 42px;
-            margin-bottom: 18px;
+            font-size: 36px;
+            font-weight: 700;
             color: #ffffff;
-            line-height: 1.2;
+            margin-bottom: 12px;
+            line-height: 1.25;
         }
 
         .hero-card p {
-            font-size: 18px;
-            color: #cbd5e1;
-            max-width: 700px;
-            margin: 0 auto 36px;
-            line-height: 1.7;
+            font-size: 15px;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            line-height: 1.6;
         }
 
-        .highlight {
-            color: #38bdf8;
-            font-weight: 700;
-        }
-
+        /* Buttons — matching image: outlined style, transparent bg, rounded pill */
         .buttons {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 16px;
+            gap: 14px;
         }
 
         .buttons a {
             text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 40px;
-            font-size: 15px;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-size: 13px;
             font-weight: 600;
-            letter-spacing: 0.3px;
-            transition: 0.3s ease;
-            min-width: 190px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            transition: all 0.25s ease;
+            min-width: 155px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .primary-btn {
-            background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-            color: white;
-            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.28);
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 28px rgba(14, 165, 233, 0.35);
-        }
-
-        .secondary-btn {
-            background: rgba(255, 255, 255, 0.08);
+        /* Row 1: ADMIN, FACULTY, RESULT — blue outline */
+        .btn-outline-blue {
+            background: transparent;
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1.5px solid rgba(96, 165, 250, 0.7);
         }
 
-        .secondary-btn:hover {
-            background: rgba(56, 189, 248, 0.14);
-            color: #38bdf8;
-            transform: translateY(-4px);
+        .btn-outline-blue:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #60a5fa;
+            color: #93c5fd;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59,130,246,0.25);
         }
 
-        footer {
+        /* STUDENT — yellow/gold outline matching image */
+        .btn-outline-gold {
+            background: transparent;
+            color: #fbbf24;
+            border: 1.5px solid rgba(251, 191, 36, 0.8);
+        }
+
+        .btn-outline-gold:hover {
+            background: rgba(251, 191, 36, 0.12);
+            border-color: #fde68a;
+            color: #fde68a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251,191,36,0.25);
+        }
+
+        /* AI — blue outline like row 1 */
+        .btn-outline-ai {
+            background: transparent;
+            color: #ffffff;
+            border: 1.5px solid rgba(96, 165, 250, 0.7);
+        }
+
+        .btn-outline-ai:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #60a5fa;
+            color: #93c5fd;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59,130,246,0.25);
+        }
+
+        /* SCAN & UPLOAD — blue outline */
+        .btn-outline-scan {
+            background: transparent;
+            color: #ffffff;
+            border: 1.5px solid rgba(96, 165, 250, 0.7);
+        }
+
+        .btn-outline-scan:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: #60a5fa;
+            color: #93c5fd;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59,130,246,0.25);
+        }
+
+        /* Row separators */
+        .btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
             width: 100%;
+        }
+
+        .btn-row + .btn-row {
+            margin-top: 0;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            padding: 16px;
-            background: rgba(15, 23, 42, 0.78);
-            color: #ffffff;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(12px);
-        }
-        .scan-btn {
-           background: linear-gradient(135deg, #f59e0b, #f97316);
-           color: white;
-           box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+            padding: 14px;
+            background: rgba(5, 13, 26, 0.6);
+            color: #64748b;
+            font-size: 13px;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
-        .scan-btn:hover {
-           transform: translateY(-4px);
-           box-shadow: 0 14px 28px rgba(249, 115, 22, 0.4);
-        }
-
-        @media (max-width: 768px) {
-            header {
-                padding: 22px 20px 22px 60px;
-            }
-
-            header h2 {
-                font-size: 24px;
-            }
-
-            .notice-toggle {
-                left: 62px;
-                top: 20px;
-                font-size: 22px;
-            }
-
-            .notice-panel {
-                left: 12px;
-                right: 12px;
-                width: auto;
-                top: 74px;
-            }
-
-            .hero-card {
-                padding: 40px 20px;
-            }
-
-            .hero-card h1 {
-                font-size: 30px;
-            }
-
-            .hero-card p {
-                font-size: 16px;
-            }
-
-            .buttons a {
-                width: 100%;
-                max-width: 300px;
-            }
-
-            .sidebar.active ~ .container {
-                margin-left: 0;
-            }
+        @media (max-width: 600px) {
+            header h2 { font-size: 20px; }
+            .hero-card { padding: 36px 18px; }
+            .hero-card h1 { font-size: 26px; }
+            .buttons a { min-width: 130px; padding: 11px 20px; font-size: 12px; }
+            .notice-panel { left: 10px; right: 10px; width: auto; }
         }
     </style>
 </head>
 
+<div class="page-bot walking" id="pageBot">
+    <div class="bot-bubble">👋 Hi there!</div>
+    <div class="bot-head">
+        <div class="bot-eye"></div>
+        <div class="bot-eye"></div>
+        <div class="bot-mouth"></div>
+    </div>
+    <div class="bot-body"></div>
+    <div class="bot-legs">
+        <div class="bot-leg left-leg"></div>
+        <div class="bot-leg right-leg"></div>
+    </div>
+</div>
+
 <body>
 
 <header>
-    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <div class="menu-toggle" onclick="toggleMenu(event)">☰</div>
 
-    <div class="notice-toggle" onclick="toggleNoticePanel()" title="College Notices">
+    <div class="notice-toggle" onclick="toggleNoticePanel(event)" title="College Notices">
         🔔
         <span class="notice-badge">5</span>
     </div>
@@ -548,19 +626,20 @@ function toggleNotice() {
 
 <div class="container">
     <div class="hero-card">
-        <h1>Welcome to the <span class="highlight">Student Performance Tracker</span></h1>
-        <p>
-            A smart and modern platform to manage and track student records, academic performance,
-            results, and intelligent analysis in one beautiful system.
-        </p>
+        <h1>Welcome to  Student Performance Tracker</h1>
+        <p>Manage students, result and AI analysis in one system.</p>
 
         <div class="buttons">
-            <a class="primary-btn" href="{% url 'authentication:teacher_login' %}">Teacher Login</a>
-            <a class="secondary-btn" href="{% url 'authentication:admin_login' %}">Admin Login</a>
-            <a class="secondary-btn" href="{% url 'authentication:result_login' %}">Result Portal</a>
-            <a class="secondary-btn" href="{% url 'authentication:student_login' %}">Student Login</a>
-            <a class="primary-btn" href="{% url 'authentication:ai_login' %}">✨ AI Performance Analysis</a>
-            <a class="primary-btn scan-btn" href="{% url 'scan:scan_upload' %}">📷 Scan & Analyze Copy</a>
+            <div class="btn-row">
+                <a class="btn-outline-blue" href="{% url 'authentication:admin_login' %}">ADMIN</a>
+                <a class="btn-outline-blue" href="{% url 'authentication:teacher_login' %}">FACULTY</a>
+                <a class="btn-outline-blue" href="{% url 'authentication:result_login' %}">RESULT</a>
+                <a class="btn-outline-gold" href="{% url 'authentication:student_login' %}">STUDENT</a>
+            </div>
+            <div class="btn-row">
+                <a class="btn-outline-ai" href="{% url 'authentication:ai_login' %}">✨Student Analysis</a>
+                <a class="btn-outline-scan" href="{% url 'scan:scan_upload' %}">SCAN &amp; UPLOAD</a>
+            </div>
         </div>
     </div>
 </div>
@@ -570,22 +649,128 @@ function toggleNotice() {
 </footer>
 
 <script>
-    function toggleMenu() {
-        document.getElementById("sidebar").classList.toggle("active");
+    const sidebar = document.getElementById("sidebar");
+    const menuToggle = document.querySelector(".menu-toggle");
+    const noticePanel = document.getElementById("noticePanel");
+    const noticeToggle = document.querySelector(".notice-toggle");
+
+    // Toggle sidebar
+    function toggleMenu(event) {
+        event.stopPropagation(); // prevent closing immediately
+        sidebar.classList.toggle("active");
     }
 
-    function toggleNoticePanel() {
-        document.getElementById("noticePanel").classList.toggle("show");
+    // Toggle notice
+    function toggleNoticePanel(event) {
+        event.stopPropagation();
+        noticePanel.classList.toggle("show");
     }
 
-    window.addEventListener("click", function(event) {
-        const noticePanel = document.getElementById("noticePanel");
-        const noticeToggle = document.querySelector(".notice-toggle");
+    // Click anywhere → close sidebar & notice
+    document.addEventListener("click", function(event) {
 
-        if (!noticePanel.contains(event.target) && !noticeToggle.contains(event.target)) {
+        // Close sidebar
+        if (
+            sidebar.classList.contains("active") &&
+            !sidebar.contains(event.target) &&
+            !menuToggle.contains(event.target)
+        ) {
+            sidebar.classList.remove("active");
+        }
+
+        // Close notice panel
+        if (
+            noticePanel.classList.contains("show") &&
+            !noticePanel.contains(event.target) &&
+            !noticeToggle.contains(event.target)
+        ) {
             noticePanel.classList.remove("show");
         }
     });
+
+    // Prevent closing when clicking inside sidebar
+    sidebar.addEventListener("click", function(event) {
+        event.stopPropagation();
+    });
+
+    noticePanel.addEventListener("click", function(event) {
+        event.stopPropagation();
+    });
+
+
+    const bot    = document.getElementById("pageBot");
+    const bubble = bot.querySelector(".bot-bubble");
+
+    const quips = [
+        "👋 Hi there!",
+        "📚 Study hard!",
+        "🤖 Beep boop!",
+        "🎓 Good luck!",
+        "✨ Stay focused!",
+        "💡 Keep going!",
+        "🚀 You got this!",
+    ];
+
+    let currentX = 40;
+    let currentY = window.innerHeight - 140;
+    let travelTimer = null;
+
+    function getRandomPos() {
+        const margin = 60;
+        const x = margin + Math.random() * (window.innerWidth  - margin * 2 - 50);
+        const y = margin + Math.random() * (window.innerHeight - margin * 2 - 80);
+        return { x, y };
+    }
+
+    function roam() {
+        const target = getRandomPos();
+        const dx = target.x - currentX;
+
+        // Face the right direction
+        if (dx < 0) {
+            bot.classList.add("flip");
+        } else {
+            bot.classList.remove("flip");
+        }
+
+        // Start walking legs
+        bot.classList.add("walking");
+
+        // Show a random quip
+        bubble.textContent = quips[Math.floor(Math.random() * quips.length)];
+
+        // Move bot
+        bot.style.left   = target.x + "px";
+        bot.style.bottom = (window.innerHeight - target.y - 80) + "px";
+
+        currentX = target.x;
+        currentY = target.y;
+
+        // After transition ends, stop legs briefly before next move
+        clearTimeout(travelTimer);
+        travelTimer = setTimeout(() => {
+            bot.classList.remove("walking");
+            // Wait a moment then roam again
+            setTimeout(roam, 800 + Math.random() * 1200);
+        }, 1900);
+    }
+
+    // Click bot to teleport & say hi
+    bot.addEventListener("click", function(e) {
+        e.stopPropagation();
+        clearTimeout(travelTimer);
+        bubble.textContent = "🤖 Wheee!";
+        roam();
+    });
+
+    // Start roaming after short delay
+    setTimeout(roam, 1200);
+
+
+
+
+
+
 </script>
 
 </body>
