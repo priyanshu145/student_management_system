@@ -44,6 +44,7 @@
               linear-gradient(180deg, #081225 0%, #0d1833 100%);
 
             z-index: -2;
+            transition: opacity 0.4s ease;
         }
 
         body::after {
@@ -52,18 +53,210 @@
             inset: 0;
             background: rgba(4, 10, 25, 0.25);
             z-index: -1;
+            transition: background 0.4s ease;
         }
 
-
-        /* Header */
-        header {
-            position: relative;
-            z-index: 10;
-            padding: 22px 24px;
-            background-color: #00091f;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0);
+        /* ========== LIGHT THEME ========== */
+        body.light-theme {
+            background: #f0f4ff;
+            color: #1e293b;
         }
+
+        body.light-theme::before {
+            background:
+                radial-gradient(ellipse 280px 180px at 34% 72%, rgba(0, 81, 255, 0.18), transparent 70%),
+                radial-gradient(ellipse 220px 140px at 42% 65%, rgba(0, 81, 255, 0.12), transparent 70%),
+                radial-gradient(ellipse 180px 120px at 30% 78%, rgba(0, 81, 255, 0.10), transparent 70%),
+                radial-gradient(ellipse 240px 180px at 74% 48%, rgba(255, 190, 0, 0.20), transparent 70%),
+                radial-gradient(ellipse 180px 130px at 80% 42%, rgba(255, 190, 0, 0.14), transparent 70%),
+                radial-gradient(ellipse 150px 110px at 70% 55%, rgba(255, 190, 0, 0.10), transparent 70%),
+                linear-gradient(180deg, #dce9ff 0%, #eef4ff 100%);
+        }
+
+        body.light-theme::after {
+            background: rgba(220, 233, 255, 0.30);
+        }
+
+        body.light-theme header {
+            background-color: #ffffff;
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        body.light-theme header h2 { color: #1e293b; }
+        body.light-theme header p  { color: #64748b; }
+
+        body.light-theme .menu-toggle {
+            background: rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.12);
+        }
+
+        body.light-theme .menu-toggle span { background: rgba(30,41,59,0.85); }
+
+        body.light-theme .menu-toggle:hover {
+            background: rgba(59,130,246,0.10);
+            box-shadow: 0 6px 20px rgba(59,130,246,0.15), inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        body.light-theme .sidebar {
+            background: #ffffff;
+            border-right: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.08);
+        }
+
+        body.light-theme .sidebar a { color: #334155; }
+
+        body.light-theme .sidebar a:hover {
+            background: rgba(59,130,246,0.10);
+            color: #2563eb;
+        }
+
+        body.light-theme .hero-card {
+            background: rgba(255, 255, 255, 0.70);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+        }
+
+        body.light-theme .hero-card::before {
+            background: linear-gradient(
+                to right,
+                rgba(37, 99, 235, 0.8) 0%,
+                rgba(37, 99, 235, 0.25) 40%,
+                rgba(217, 119, 6, 0.25) 60%,
+                rgba(217, 119, 6, 0.8) 100%
+            );
+        }
+
+        body.light-theme .hero-card h1 { color: #1e293b; }
+        body.light-theme .hero-card p  { color: #475569; }
+
+        body.light-theme .btn-outline-blue {
+            color: #1e40af;
+            border: 1.5px solid rgba(37,99,235,0.55);
+        }
+
+        body.light-theme .btn-outline-blue:hover {
+            background: rgba(37,99,235,0.10);
+            border-color: #2563eb;
+            color: #1d4ed8;
+            box-shadow: 0 6px 20px rgba(37,99,235,0.20);
+        }
+
+        body.light-theme .btn-outline-gold {
+            color: #b45309;
+            border: 1.5px solid rgba(217,119,6,0.70);
+        }
+
+        body.light-theme .btn-outline-gold:hover {
+            background: rgba(217,119,6,0.10);
+            border-color: #d97706;
+            color: #92400e;
+            box-shadow: 0 6px 20px rgba(217,119,6,0.20);
+        }
+
+        body.light-theme .btn-outline-ai {
+            color: #1e40af;
+            border: 1.5px solid rgba(37,99,235,0.55);
+        }
+
+        body.light-theme .btn-outline-ai:hover {
+            background: rgba(37,99,235,0.10);
+            border-color: #2563eb;
+            color: #1d4ed8;
+            box-shadow: 0 6px 20px rgba(37,99,235,0.20);
+        }
+
+        body.light-theme .btn-outline-scan {
+            color: #1e40af;
+            border: 1.5px solid rgba(37,99,235,0.55);
+        }
+
+        body.light-theme .btn-outline-scan:hover {
+            background: rgba(37,99,235,0.10);
+            border-color: #2563eb;
+            color: #1d4ed8;
+            box-shadow: 0 6px 20px rgba(37,99,235,0.20);
+        }
+
+        body.light-theme .notice-panel {
+            background: rgba(255, 255, 255, 0.97);
+            border: 1px solid rgba(0,0,0,0.10);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+        }
+
+        body.light-theme .notice-panel h3 {
+            color: #1e293b;
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+        }
+
+        body.light-theme .notice-list li {
+            background: rgba(0,0,0,0.03);
+            color: #334155;
+        }
+
+        body.light-theme .notice-list li:hover {
+            background: rgba(37,99,235,0.08);
+            color: #1e3a8a;
+        }
+
+        body.light-theme footer {
+            background: rgba(241,245,249,0.85);
+            color: #94a3b8;
+            border-top: 1px solid rgba(0,0,0,0.07);
+        }
+
+        body.light-theme .bot-head,
+        body.light-theme .bot-body {
+            border-color: rgba(37,99,235,0.6);
+        }
+
+        /* ========== THEME TOGGLE BUTTON ========== */
+        .theme-toggle {
+            position: absolute;
+            right: 112px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            z-index: 1002;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.25s, box-shadow 0.25s, transform 0.3s;
+            user-select: none;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.13);
+            box-shadow: 0 6px 20px rgba(251,191,36,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+            transform: translateY(-50%) rotate(20deg);
+        }
+
+        body.light-theme .theme-toggle {
+            background: rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.12);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        body.light-theme .theme-toggle:hover {
+            background: rgba(37,99,235,0.10);
+            box-shadow: 0 6px 20px rgba(37,99,235,0.20), inset 0 1px 0 rgba(255,255,255,0.6);
+        }
+
+        /* Icon swap */
+        .theme-toggle .icon-dark { display: inline; }
+        .theme-toggle .icon-light { display: none; }
+        body.light-theme .theme-toggle .icon-dark { display: none; }
+        body.light-theme .theme-toggle .icon-light { display: inline; }
+
+        /* ========== END THEME TOGGLE ========== */
 
         .page-bot {
             position: fixed;
@@ -248,11 +441,22 @@
 
         .page-bot:hover .bot-bubble { opacity: 1; }
 
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 22px 24px;
+            background-color: #00091f;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0);
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
         header h2 {
             font-size: 26px;
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 0.3px;
+            transition: color 0.3s;
         }
 
         header p {
@@ -260,6 +464,7 @@
             color: #94a3b8;
             margin-top: 3px;
             letter-spacing: 0.5px;
+            transition: color 0.3s;
         }
 
         /* Hamburger - glassy */
@@ -345,6 +550,7 @@
             padding: 16px;
             z-index: 1100;
             display: none;
+            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
         .notice-panel.show { display: block; }
@@ -355,6 +561,7 @@
             margin-bottom: 12px;
             padding-bottom: 10px;
             border-bottom: 1px solid rgba(255,255,255,0.07);
+            transition: color 0.3s;
         }
 
         .notice-list { list-style: none; }
@@ -367,7 +574,7 @@
             color: #cbd5e1;
             font-size: 13px;
             line-height: 1.5;
-            transition: 0.2s;
+            transition: background 0.2s, color 0.2s;
         }
 
         .notice-list li:hover {
@@ -382,10 +589,10 @@
             top: 0;
             width: 250px;
             height: 100%;
-            background: rgba(5, 13, 26, 0.98);
+            background: #00091f;
             border-right: 1px solid rgba(255,255,255,0.07);
             padding-top: 90px;
-            transition: left 0.3s ease;
+            transition: left 0.3s ease, background 0.4s ease;
             z-index: 1000;
         }
 
@@ -399,7 +606,7 @@
             margin: 4px 10px;
             border-radius: 10px;
             font-size: 15px;
-            transition: 0.25s;
+            transition: background 0.25s, color 0.25s, transform 0.25s;
         }
 
         .sidebar a:hover {
@@ -419,29 +626,41 @@
             padding: 50px 20px 80px;
         }
 
-        /* Hero card - matching image: dark bg, rounded corners, subtle blue border */
+        /* Hero card */
         .hero-card {
             width: 100%;
             max-width: 840px;
             background: rgba(0, 17, 51, 0.39);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(22, 111, 255, 0.58);
+            border: none;
             border-radius: 20px;
             padding: 52px 40px 52px;
             text-align: center;
             position: relative;
+            transition: background 0.4s ease, box-shadow 0.4s ease;
         }
 
-        /* Subtle card glow like in image */
         .hero-card::before {
             content: '';
             position: absolute;
-            inset: -1px;
-            border-radius: 21px;
-            
+            inset: 0;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(
+                to right,
+                rgba(22, 111, 255, 0.9) 0%,
+                rgba(22, 111, 255, 0.3) 40%,
+                rgba(251, 191, 36, 0.3) 60%,
+                rgba(251, 191, 36, 0.9) 100%
+            );
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
             pointer-events: none;
-            z-index: -1;
+            transition: background 0.4s ease;
         }
 
         .hero-card h1 {
@@ -450,6 +669,7 @@
             color: #ffffff;
             margin-bottom: 12px;
             line-height: 1.25;
+            transition: color 0.3s;
         }
 
         .hero-card p {
@@ -457,9 +677,10 @@
             color: #94a3b8;
             margin-bottom: 40px;
             line-height: 1.6;
+            transition: color 0.3s;
         }
 
-        /* Buttons — matching image: outlined style, transparent bg, rounded pill */
+        /* Buttons */
         .buttons {
             display: flex;
             flex-wrap: wrap;
@@ -482,7 +703,6 @@
             justify-content: center;
         }
 
-        /* Row 1: ADMIN, FACULTY, RESULT — blue outline */
         .btn-outline-blue {
             background: transparent;
             color: #ffffff;
@@ -497,7 +717,6 @@
             box-shadow: 0 6px 20px rgba(59,130,246,0.25);
         }
 
-        /* STUDENT — yellow/gold outline matching image */
         .btn-outline-gold {
             background: transparent;
             color: #fbbf24;
@@ -512,7 +731,6 @@
             box-shadow: 0 6px 20px rgba(251,191,36,0.25);
         }
 
-        /* AI — blue outline like row 1 */
         .btn-outline-ai {
             background: transparent;
             color: #ffffff;
@@ -527,7 +745,6 @@
             box-shadow: 0 6px 20px rgba(59,130,246,0.25);
         }
 
-        /* SCAN & UPLOAD — blue outline */
         .btn-outline-scan {
             background: transparent;
             color: #ffffff;
@@ -551,9 +768,7 @@
             width: 100%;
         }
 
-        .btn-row + .btn-row {
-            margin-top: 0;
-        }
+        .btn-row + .btn-row { margin-top: 0; }
 
         /* Footer */
         footer {
@@ -565,6 +780,7 @@
             color: #64748b;
             font-size: 13px;
             border-top: 1px solid rgba(255,255,255,0.05);
+            transition: background 0.4s ease, color 0.3s, border-color 0.3s;
         }
 
         @media (max-width: 600px) {
@@ -573,6 +789,7 @@
             .hero-card h1 { font-size: 26px; }
             .buttons a { min-width: 130px; padding: 11px 20px; font-size: 12px; }
             .notice-panel { left: 10px; right: 10px; width: auto; }
+            .theme-toggle { right: 110px; }
         }
     </style>
 </head>
@@ -595,6 +812,12 @@
 
 <header>
     <div class="menu-toggle" onclick="toggleMenu(event)">☰</div>
+
+    <!-- ✅ THEME TOGGLE BUTTON — added here, no other lines changed -->
+    <div class="theme-toggle" id="themeToggle" onclick="toggleTheme(event)" title="Switch Theme">
+        <span class="icon-dark">🌙</span>
+        <span class="icon-light">☀️</span>
+    </div>
 
     <div class="notice-toggle" onclick="toggleNoticePanel(event)" title="College Notices">
         🔔
@@ -656,7 +879,7 @@
 
     // Toggle sidebar
     function toggleMenu(event) {
-        event.stopPropagation(); // prevent closing immediately
+        event.stopPropagation();
         sidebar.classList.toggle("active");
     }
 
@@ -665,6 +888,22 @@
         event.stopPropagation();
         noticePanel.classList.toggle("show");
     }
+
+    // ✅ THEME TOGGLE FUNCTION — added here, no other lines changed
+    function toggleTheme(event) {
+        event.stopPropagation();
+        document.body.classList.toggle("light-theme");
+        // Persist preference
+        const isLight = document.body.classList.contains("light-theme");
+        localStorage.setItem("theme", isLight ? "light" : "dark");
+    }
+
+    // ✅ Restore saved theme on page load
+    (function () {
+        if (localStorage.getItem("theme") === "light") {
+            document.body.classList.add("light-theme");
+        }
+    })();
 
     // Click anywhere → close sidebar & notice
     document.addEventListener("click", function(event) {
@@ -765,12 +1004,6 @@
 
     // Start roaming after short delay
     setTimeout(roam, 1200);
-
-
-
-
-
-
 </script>
 
 </body>
