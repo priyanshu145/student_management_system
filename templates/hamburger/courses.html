@@ -1,0 +1,229 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses | Student Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #2c3e50;
+            color: white;
+            padding: 16px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+        .navbar a:hover {
+            color: #1abc9c;
+        }
+
+        /* Heading */
+        .header {
+            text-align: center;
+            padding: 40px 20px 10px;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            color: #2c3e50;
+        }
+
+        .header p {
+            color: #777;
+            margin-top: 10px;
+        }
+
+        /* Courses Grid */
+        .courses-container {
+            padding: 30px 60px 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        /* Card */
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .course-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .course-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .course-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .course-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #1abc9c;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .course-btn:hover {
+            background: #16a085;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #2c3e50;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .courses-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Student Management System</h2>
+        <div>
+            <a href="{% url 'main_app:index' %}">Home</a>
+            <a href="#">Courses</a>
+            <a href="{% url 'authentication:student_login' %}">Student Login</a>
+            
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <h1>Our Courses</h1>
+        <p>Explore the courses offered in our college</p>
+    </div>
+
+    <!-- Courses -->
+    <div class="courses-container">
+
+        <!-- Course 1 -->
+        <div class="course-card">
+            <div class="course-icon">💻</div>
+            <div class="course-title">B.Tech Computer Science</div>
+            <div class="course-desc">
+                Covers programming, data structures, AI, web development, and software engineering.
+            </div>
+            <a href="#" class="course-btn">View Details</a>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="course-card">
+            <div class="course-icon">⚡</div>
+            <div class="course-title">Electrical Engineering</div>
+            <div class="course-desc">
+                Learn circuits, power systems, electronics, and electrical machines.
+            </div>
+            <a href="#" class="course-btn">View Details</a>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="course-card">
+            <div class="course-icon">🏗️</div>
+            <div class="course-title">Civil Engineering</div>
+            <div class="course-desc">
+                Study construction, structural design, surveying, and infrastructure development.
+            </div>
+            <a href="#" class="course-btn">View Details</a>
+        </div>
+
+        <!-- Course 4 -->
+        <div class="course-card">
+            <div class="course-icon">⚙️</div>
+            <div class="course-title">Mechanical Engineering</div>
+            <div class="course-desc">
+                Covers machines, thermodynamics, manufacturing, and industrial systems.
+            </div>
+            <a href="#" class="course-btn">View Details</a>
+        </div>
+
+        <!-- Course 5 -->
+        <div class="course-card">
+            <div class="course-icon">📊</div>
+            <div class="course-title">BBA (Management)</div>
+            <div class="course-desc">
+                Learn business management, marketing, finance, and entrepreneurship.
+            </div>
+            <a href="#" class="course-btn">View Details</a>
+        </div>
+
+        <!-- Course 6 -->
+        <div class="course-card">
+            <div class="course-icon">🔬</div>
+            <div class="course-title">B.Sc (Science)</div>
+            <div class="course-desc">
+                Focus on physics, chemistry, mathematics, and scientific research.
+            </div>
+            <a href="#" class="course-btn">View Details</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        © 2026 Student Management System | All Rights Reserved
+    </div>
+
+</body>
+</html>

@@ -42,5 +42,6 @@ urlpatterns = [
     path('teacher/', include('teacher.urls')),
     path('result/', include('result.urls')),
     path('scan/', include('scan.urls')),
+    path('ai_interview/', include('ai_interview.urls')),
       
 ]

@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import pymysql
 
+
 pymysql.install_as_MySQLdb()
 
 # Base directory
@@ -11,13 +12,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load .env file
 load_dotenv(BASE_DIR / '.env')
 
+GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
 # Security
 SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = True
+DEBUG = True 
 
 ALLOWED_HOSTS = ['Priyanshu998494.pythonanywhere.com', 'localhost', '127.0.0.1']
 
@@ -25,6 +28,7 @@ ALLOWED_HOSTS = ['Priyanshu998494.pythonanywhere.com', 'localhost', '127.0.0.1']
 INSTALLED_APPS = [
     'admin_panel',   # correct name
     'scan',          # agar error aaye to hata dena
+    'ai_interview',
     'teacher',
     'student',
     'result',

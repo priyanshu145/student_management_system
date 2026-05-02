@@ -791,6 +791,48 @@
             .notice-panel { left: 10px; right: 10px; width: auto; }
             .theme-toggle { right: 110px; }
         }
+
+        .ai-interview-btn {
+             position: absolute;
+             right: 160px;
+             top: 50%;
+             transform: translateY(-50%);
+             cursor: pointer;
+             z-index: 1002;
+
+             width: 42px;
+             height: 42px;
+             border-radius: 12px;
+
+             background: rgba(255, 255, 255, 0.07);
+             border: 1px solid rgba(255, 255, 255, 0.14);
+
+             backdrop-filter: blur(12px);
+             box-shadow: 0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+
+             display: flex;
+             align-items: center;
+             justify-content: center;
+
+             font-size: 18px;
+             transition: 0.3s;
+        }
+
+        .ai-interview-btn:hover {
+            background: rgba(56, 189, 248, 0.2);
+            box-shadow: 0 6px 20px rgba(56,189,248,0.4);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Light Theme Support */
+        body.light-theme .ai-interview-btn {
+           background: rgba(0,0,0,0.06);
+           border: 1px solid rgba(0,0,0,0.12);
+        }
+
+        body.light-theme .ai-interview-btn:hover {
+            background: rgba(37,99,235,0.15);
+        }
     </style>
 </head>
 
@@ -811,6 +853,10 @@
 <body>
 
 <header>
+    
+    <a href="{% url 'ai_interview:upload_resume' %}" class="ai-interview-btn" title="Start AI Interview">
+    🤖
+    </a>
     <div class="menu-toggle" onclick="toggleMenu(event)">☰</div>
 
     <!-- ✅ THEME TOGGLE BUTTON — added here, no other lines changed -->
@@ -842,9 +888,9 @@
 <div id="sidebar" class="sidebar">
     <a href="#">Home</a>
     <a href="#">Students</a>
-    <a href="#">Courses</a>
+    <a href="{% url "main_app:courses" %}">Courses</a>
     <a href="#">Results</a>
-    <a href="#">Contact</a>
+    <a href="{% url 'main_app:contact' %}">Contact</a>
 </div>
 
 <div class="container">
@@ -1004,6 +1050,11 @@
 
     // Start roaming after short delay
     setTimeout(roam, 1200);
+
+
+    function goToAIInterview(){
+    window.location.href = "/ai-interview/upload-resume/";
+}
 </script>
 
 </body>

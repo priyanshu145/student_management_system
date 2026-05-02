@@ -1,0 +1,301 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Interview Session</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #101727;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .video-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(56,189,248,0.4);
+            border-radius: 18px;
+            padding: 25px;
+            min-height: 330px;
+        }
+
+        video {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 15px;
+            background: #000;
+        }
+
+        .ai-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 2px solid #38bdf8;
+            margin: 30px auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 65px;
+            background: rgba(56,189,248,0.1);
+        }
+
+        .ai-avatar.speaking {
+            animation: glow 0.8s infinite;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px #38bdf8; }
+            50% { box-shadow: 0 0 35px #38bdf8; transform: scale(1.04); }
+            100% { box-shadow: 0 0 10px #38bdf8; }
+        }
+
+        .controls {
+            margin-top: 25px;
+        }
+
+        button {
+            padding: 12px 22px;
+            margin: 8px;
+            border-radius: 30px;
+            border: 1px solid #38bdf8;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: rgba(56,189,248,0.18);
+        }
+
+        .end-btn {
+            border-color: #ef4444;
+            color: #fca5a5;
+        }
+
+        .answer-box {
+            margin-top: 25px;
+            background: rgba(0,0,0,0.25);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .mic-status {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        #userAnswer {
+            color: #38bdf8;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        #aiQuestion {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        @media(max-width: 768px) {
+            .video-area {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>AI Video Interview</h1>
+    <p>AI will ask questions based on your uploaded resume.</p>
+
+    <div class="video-area">
+
+        <div class="box">
+            <div class="ai-avatar" id="aiAvatar">🤖</div>
+            <h3>AI Interviewer</h3>
+            <p id="aiQuestion">Click Start Interview...</p>
+        </div>
+
+        <div class="box">
+            <video id="studentVideo" autoplay muted></video>
+            <h3>You</h3>
+            <p class="mic-status" id="micStatus">Mic not started</p>
+        </div>
+
+    </div>
+
+    <div class="controls">
+        <button onclick="startInterview()">Start Interview</button>
+        <button onclick="listenAnswer()">Start Speaking Answer</button>
+        <button onclick="nextQuestion()">Next Question</button>
+        <button onclick="endInterview()" class="end-btn">End Interview</button>
+    </div>
+
+    <div class="answer-box">
+        <h3>Your Answer:</h3>
+        <p id="userAnswer">No answer yet...</p>
+    </div>
+
+    <div id="questionsData" style="display:none;">
+{{ session.questions|escapejs }}
+    </div>
+</div>
+
+<script>
+let stream = null;
+let recognition = null;
+let currentQuestionIndex = 0;
+let interviewStarted = false;
+
+let rawQuestions = document.getElementById("questionsData").innerText.trim();
+
+let questions = rawQuestions
+    .split(/\n+/)
+    .map(q => q.trim())
+    .filter(q => q.length > 0);
+
+if (questions.length === 0) {
+    questions = [
+        "Tell me about yourself.",
+        "What are your main technical skills?",
+        "Explain your best project.",
+        "Why should we hire you?",
+        "What are your strengths and weaknesses?"
+    ];
+}
+
+async function startCamera() {
+    try {
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        });
+
+        document.getElementById("studentVideo").srcObject = stream;
+        document.getElementById("micStatus").innerText = "Camera and mic ready";
+    } catch (error) {
+        alert("Please allow camera and microphone permission.");
+        document.getElementById("micStatus").innerText = "Camera/Mic permission denied";
+    }
+}
+
+function aiSpeak(text) {
+    const avatar = document.getElementById("aiAvatar");
+    const aiQuestion = document.getElementById("aiQuestion");
+
+    aiQuestion.innerText = text;
+
+    window.speechSynthesis.cancel();
+
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-IN";
+    speech.rate = 0.9;
+
+    speech.onstart = function () {
+        avatar.classList.add("speaking");
+        document.getElementById("micStatus").innerText = "AI is speaking...";
+    };
+
+    speech.onend = function () {
+        avatar.classList.remove("speaking");
+        document.getElementById("micStatus").innerText = "Now click Start Speaking Answer";
+    };
+
+    window.speechSynthesis.speak(speech);
+}
+
+async function startInterview() {
+    if (!interviewStarted) {
+        await startCamera();
+        interviewStarted = true;
+        currentQuestionIndex = 0;
+    }
+
+    aiSpeak(questions[currentQuestionIndex]);
+}
+
+function listenAnswer() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        alert("Speech recognition is not supported in this browser. Use Google Chrome.");
+        return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    document.getElementById("micStatus").innerText = "Listening... Speak now 🎤";
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        const answer = event.results[0][0].transcript;
+        document.getElementById("userAnswer").innerText = answer;
+        document.getElementById("micStatus").innerText = "Answer captured";
+    };
+
+    recognition.onerror = function(event) {
+        document.getElementById("micStatus").innerText = "Mic error: " + event.error;
+    };
+
+    recognition.onend = function() {
+        if (document.getElementById("micStatus").innerText === "Listening... Speak now 🎤") {
+            document.getElementById("micStatus").innerText = "Listening stopped";
+        }
+    };
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+
+    document.getElementById("userAnswer").innerText = "No answer yet...";
+
+    if (currentQuestionIndex >= questions.length) {
+        aiSpeak("Your interview is completed. Thank you.");
+        return;
+    }
+
+    aiSpeak(questions[currentQuestionIndex]);
+}
+
+function endInterview() {
+    window.speechSynthesis.cancel();
+
+    if (recognition) {
+        recognition.stop();
+    }
+
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        document.getElementById("studentVideo").srcObject = null;
+    }
+
+    document.getElementById("micStatus").innerText = "Interview ended";
+    document.getElementById("aiQuestion").innerText = "Interview ended.";
+    document.getElementById("aiAvatar").classList.remove("speaking");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Interview</title>
+
+    <style>
+        body {
+            background: #101727;
+            color: white;
+            font-family: Arial;
+            margin: 0;
+        }
+
+        .container {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .card {
+            max-width: 500px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(96,165,250,0.4);
+        }
+
+        input {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 25px;
+            border-radius: 20px;
+            border: 1px solid #38bdf8;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: rgba(56,189,248,0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>AI Interview</h1>
+        <p>Upload your resume to start interview</p>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="resume" required>
+            <br>
+            <button type="submit">Start Interview</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

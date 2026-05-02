@@ -16,3 +16,11 @@ def logout_views(request):
     
     return redirect('main_app:index')
     
+def contact(request):
+    return render(request, "hamburger/contact.html")
+
+
+def courses(request):
+    return render(request, 'hamburger/courses.html')
+
+
