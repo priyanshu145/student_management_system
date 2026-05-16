@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load .env file
 load_dotenv(BASE_DIR / '.env')
 
-GEMINI_API_KEY=os.getenv("GEMINI_API_KEY")
+GROQ_API_KEY=os.getenv("GROQ_API_KEY")
 # Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

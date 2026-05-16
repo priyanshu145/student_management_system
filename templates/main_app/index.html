@@ -833,8 +833,24 @@
         body.light-theme .ai-interview-btn:hover {
             background: rgba(37,99,235,0.15);
         }
+
+        /* ========== STARFIELD CANVAS ========== */
+        #stars-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        body.light-theme #stars-canvas {
+            opacity: 0.18;
+        }
+        /* ========== END STARFIELD CANVAS ========== */
     </style>
 </head>
+
+<!-- STARFIELD CANVAS — placed right after <head>, before other fixed elements -->
+<canvas id="stars-canvas"></canvas>
 
 <div class="page-bot walking" id="pageBot">
     <div class="bot-bubble">👋 Hi there!</div>
@@ -906,8 +922,8 @@
                 <a class="btn-outline-gold" href="{% url 'authentication:student_login' %}">STUDENT</a>
             </div>
             <div class="btn-row">
-                <a class="btn-outline-ai" href="{% url 'authentication:ai_login' %}">✨Student Analysis</a>
-                <a class="btn-outline-scan" href="{% url 'scan:scan_upload' %}">SCAN &amp; UPLOAD</a>
+                
+                <a class="btn-outline-scan" href="{% url 'scan:scan_upload' %}">✨SCAN &amp; UPLOAD</a>
             </div>
         </div>
     </div>
@@ -1055,6 +1071,43 @@
     function goToAIInterview(){
     window.location.href = "/ai-interview/upload-resume/";
 }
+
+    // ========== STARFIELD ==========
+    (function () {
+        const canvas = document.getElementById("stars-canvas");
+        const ctx    = canvas.getContext("2d");
+
+        function resize() {
+            canvas.width  = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        const stars = Array.from({ length: 160 }, () => ({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            r: Math.random() * 1.3 + 0.2,
+            o: Math.random() * 0.55 + 0.08,
+            speed: Math.random() * 0.004 + 0.001,
+            dir: Math.random() < 0.5 ? 1 : -1
+        }));
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => {
+                s.o += s.speed * s.dir;
+                if (s.o > 0.65 || s.o < 0.06) s.dir *= -1;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(148, 200, 255, ${s.o})`;
+                ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+    })();
+    // ========== END STARFIELD ==========
 </script>
 
 </body>

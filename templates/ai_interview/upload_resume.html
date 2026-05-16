@@ -2,66 +2,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>AI Interview</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NexaHire — Upload Resume</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg:#080c14; --surface:#0d1422;
+      --accent:#38bdf8; --accent2:#818cf8;
+      --border:rgba(99,179,237,0.18);
+      --text:#e2e8f0; --muted:#64748b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      background:var(--bg); color:var(--text);
+      font-family:'DM Mono',monospace;
+      min-height:100vh; display:flex;
+      align-items:center; justify-content:center;
+      overflow:hidden;
+    }
 
-    <style>
-        body {
-            background: #101727;
-            color: white;
-            font-family: Arial;
-            margin: 0;
-        }
+    /* Stars */
+    canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
-        .container {
-            padding: 40px;
-            text-align: center;
-        }
+    /* Card */
+    .card{
+      position:relative; z-index:10;
+      background:rgba(13,20,34,0.85);
+      border:1px solid var(--border);
+      border-radius:24px; padding:52px 48px;
+      width:min(480px,92vw);
+      backdrop-filter:blur(16px);
+      box-shadow:0 0 80px rgba(56,189,248,0.07);
+    }
 
-        .card {
-            max-width: 500px;
-            margin: auto;
-            padding: 30px;
-            border-radius: 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(96,165,250,0.4);
-        }
+    /* Logo */
+    .logo{
+      font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      margin-bottom:6px;
+    }
+    h2{font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:700; margin:12px 0 6px; line-height:1.25;}
+    .sub{color:var(--muted); font-size:.82rem; line-height:1.6; margin-bottom:36px;}
 
-        input {
-            margin-top: 20px;
-        }
+    /* Drop zone */
+    .drop-zone{
+      border:1.5px dashed var(--border);
+      border-radius:16px; padding:36px 24px;
+      text-align:center; cursor:pointer;
+      transition:all .25s;
+      position:relative; overflow:hidden;
+    }
+    .drop-zone:hover, .drop-zone.drag-over{
+      border-color:var(--accent);
+      background:rgba(56,189,248,0.05);
+    }
+    .drop-zone input[type=file]{
+      position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;
+    }
+    .drop-icon{font-size:2.4rem; margin-bottom:10px;}
+    .drop-text{font-size:.85rem; color:var(--muted);}
+    .drop-text span{color:var(--accent); text-decoration:underline;}
+    .file-name{
+      margin-top:8px; font-size:.78rem; color:var(--accent);
+      min-height:18px;
+    }
 
-        button {
-            margin-top: 20px;
-            padding: 12px 25px;
-            border-radius: 20px;
-            border: 1px solid #38bdf8;
-            background: transparent;
-            color: white;
-            cursor: pointer;
-        }
+    /* Supported */
+    .supported{
+      display:flex; gap:8px; justify-content:center; margin-top:14px;
+    }
+    .tag{
+      padding:4px 10px; border-radius:6px;
+      background:rgba(255,255,255,0.04); border:1px solid var(--border);
+      font-size:.68rem; color:var(--muted);
+    }
 
-        button:hover {
-            background: rgba(56,189,248,0.2);
-        }
-    </style>
+    /* Submit */
+    .btn-submit{
+      margin-top:28px; width:100%; padding:16px;
+      border-radius:14px; border:none;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      color:#000; font-family:'Syne',sans-serif;
+      font-size:1rem; font-weight:700; cursor:pointer;
+      transition:opacity .2s, transform .15s;
+      display:flex; align-items:center; justify-content:center; gap:10px;
+    }
+    .btn-submit:hover{opacity:.9; transform:translateY(-1px);}
+    .btn-submit:disabled{opacity:.4; cursor:not-allowed; transform:none;}
+
+    /* Loading spinner */
+    .spinner{
+      display:none; width:18px; height:18px;
+      border:2.5px solid rgba(0,0,0,0.25);
+      border-top-color:#000; border-radius:50%;
+      animation:spin .7s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* Privacy note */
+    .privacy{
+      margin-top:20px; font-size:.68rem; color:var(--muted);
+      text-align:center; line-height:1.6;
+    }
+
+    /* Feature chips */
+    .features{
+      display:flex; flex-direction:column; gap:10px; margin-bottom:32px;
+    }
+    .feat{
+      display:flex; align-items:center; gap:12px;
+      font-size:.78rem; color:var(--muted);
+    }
+    .feat-icon{
+      width:28px; height:28px; border-radius:8px; flex-shrink:0;
+      background:rgba(56,189,248,0.08); border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      font-size:.9rem;
+    }
+  </style>
 </head>
-
 <body>
+<canvas id="stars"></canvas>
 
-<div class="container">
-    <div class="card">
-        <h1>AI Interview</h1>
-        <p>Upload your resume to start interview</p>
+<div class="card">
+  <div class="logo">NexaHire</div>
+  <h2>AI Interview<br>Session</h2>
+  <p class="sub">Upload your resume and let NEXUS AI craft a personalised interview based on your skills and experience.</p>
 
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="file" name="resume" required>
-            <br>
-            <button type="submit">Start Interview</button>
-        </form>
+  <div class="features">
+    <div class="feat"><div class="feat-icon">🎤</div>Voice-powered Q&amp;A — speak your answers naturally</div>
+    <div class="feat"><div class="feat-icon">🤖</div>12 tailored questions generated from your resume</div>
+    <div class="feat"><div class="feat-icon">📝</div>Live transcript — watch answers appear in real time</div>
+  </div>
+
+  <form method="POST" enctype="multipart/form-data" id="upload-form">
+    {% csrf_token %}
+    <div class="drop-zone" id="drop-zone">
+      <input type="file" name="resume" id="resume-input" accept=".pdf,.docx,.txt" required/>
+      <div class="drop-icon">📄</div>
+      <div class="drop-text"><span>Click to upload</span> or drag &amp; drop</div>
+      <div class="file-name" id="file-name">No file selected</div>
     </div>
+    <div class="supported">
+      <div class="tag">PDF</div><div class="tag">DOCX</div><div class="tag">TXT</div>
+    </div>
+    <button class="btn-submit" id="btn-submit" type="submit" disabled>
+      <div class="spinner" id="spinner"></div>
+      <span id="btn-label">Select a resume first</span>
+    </button>
+  </form>
+
+  <p class="privacy">🔒 Your resume is processed securely and not stored beyond your session.</p>
 </div>
 
+<script>
+// Stars
+(function(){
+  const c=document.getElementById('stars'), ctx=c.getContext('2d');
+  c.width=window.innerWidth; c.height=window.innerHeight;
+  const stars=Array.from({length:120},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.1+.2,o:Math.random()*.5+.1,s:Math.random()*.003+.001}));
+  (function draw(){ctx.clearRect(0,0,c.width,c.height);stars.forEach(s=>{s.o+=s.s;if(s.o>.65||s.o<.1)s.s=-s.s;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(148,200,255,${s.o})`;ctx.fill();});requestAnimationFrame(draw);})();
+})();
+
+const input  = document.getElementById('resume-input');
+const nameEl = document.getElementById('file-name');
+const btn    = document.getElementById('btn-submit');
+const label  = document.getElementById('btn-label');
+const zone   = document.getElementById('drop-zone');
+
+input.addEventListener('change', ()=>{
+  if(input.files[0]){
+    nameEl.textContent = input.files[0].name;
+    btn.disabled = false;
+    label.textContent = 'Start Interview →';
+  }
+});
+
+// Drag & drop styling
+zone.addEventListener('dragover', e=>{e.preventDefault(); zone.classList.add('drag-over');});
+zone.addEventListener('dragleave', ()=>zone.classList.remove('drag-over'));
+zone.addEventListener('drop', e=>{
+  e.preventDefault(); zone.classList.remove('drag-over');
+  if(e.dataTransfer.files[0]){
+    input.files = e.dataTransfer.files;
+    input.dispatchEvent(new Event('change'));
+  }
+});
+
+// Loading state on submit
+document.getElementById('upload-form').addEventListener('submit', ()=>{
+  btn.disabled = true;
+  document.getElementById('spinner').style.display = 'block';
+  label.textContent = 'Analysing resume…';
+});
+</script>
 </body>
 </html>
